@@ -2,13 +2,28 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [course, setCourse] = useState({
+    title: "",
+    progress: 0,
+    difficulty: "Beginner",
+    notes: "",
+  }); //form state
 
-const [course, setCourse] = useState({
-  title: "",
-  progress: 0,
-  difficulty: "Beginner",
-  notes: "",
-});
+  const [courses, setCourses] = useState([]); //course list
+
+  const handleChange = (e) => {
+    setCourse({
+      ...course,
+      [e.target.name]: e.target.value,
+    });
+  }; //for objs
+
+  const handleAddCourse = (e) => {
+    e.preventDefault();
+    setCourses(
+      [...courses, course]
+    )
+  } //for arrays
 
   return (
     <>
@@ -20,43 +35,61 @@ const [course, setCourse] = useState({
             <div>
               <label htmlFor="title">Course Title</label>
               <input
+                onChange={handleChange}
                 type="text"
                 id="title"
-                placeholder="e.g. Advanced  React..."
+                name="title"
+                placeholder="e.g. Advanced React..."
+                value={course.title}
               />
             </div>
             <div>
               <label htmlFor="progress">Progress</label>
-              <input type="range" id="progress" min={0} max={100} step={5} />
+              <input
+                onChange={handleChange}
+                type="range"
+                name="progress"
+                id="progress"
+                min={0}
+                max={100}
+                step={5}
+                value={course.progress}
+              />
             </div>
             <div>
               <label htmlFor="level">Difficulty</label>
               <div>
                 <input
+                  onChange={handleChange}
                   type="radio"
                   id="beginner"
                   name="difficulty"
                   value="Beginner"
+                  checked={course.difficulty === "Beginner"}
                 />
 
                 <label htmlFor="beginner">Beginner</label>
               </div>
               <div>
                 <input
+                  onChange={handleChange}
                   type="radio"
                   id="intermediate"
                   name="difficulty"
                   value="Intermediate"
+                  checked={course.difficulty === "Intermediate"}
                 />
 
                 <label htmlFor="intermediate">Intermediate</label>
               </div>
               <div>
                 <input
+                  onChange={handleChange}
                   type="radio"
                   id="advanced"
                   name="difficulty"
                   value="Advanced"
+                  checked={course.difficulty === "Advanced"}
                 />
 
                 <label htmlFor="advanced">Advanced</label>
@@ -64,9 +97,17 @@ const [course, setCourse] = useState({
             </div>
             <div>
               <label htmlFor="notes">Notes</label>
-              <textarea name="notes" id="notes" placeholder="e.g. Need more practice with hooks..."></textarea>
+              <textarea
+                onChange={handleChange}
+                name="notes"
+                id="notes"
+                placeholder="e.g. Need more practice with hooks..."
+                value={course.notes}
+              ></textarea>
             </div>
-            <button type="submit">Add course</button>
+            <button onClick={handleAddCourse} type="submit">
+              Add course
+            </button>
           </form>
         </section>
         <section>filters</section>
