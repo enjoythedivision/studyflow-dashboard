@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import CourseCard from "./components/CourseCard"
+import CourseCard from "./components/CourseCard";
 
 function App() {
   const [course, setCourse] = useState({
@@ -21,7 +21,13 @@ function App() {
 
   const handleAddCourse = (e) => {
     e.preventDefault();
-    setCourses([...courses, course]);
+    setCourses([
+      ...courses,
+      {
+        ...course,
+        id: Date.now(),
+      },
+    ]);
   }; //for arrays
 
   return (
@@ -113,7 +119,7 @@ function App() {
         <section>course list</section>
         <section>
           {courses.map((course) => (
-            <CourseCard course={course}/>
+            <CourseCard course={course} />
           ))}
         </section>
       </main>
