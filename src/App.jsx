@@ -112,6 +112,15 @@ function App() {
         </section>
         <section>filters</section>
         <section>course list</section>
+        <section>
+          {courses.map((course) => (
+            <div key={course.id}>
+              <h3>{course.title}</h3>
+              <h4>{course.difficulty}</h4>
+              <p>{course.notes}</p>
+              <p>Progress: {course.progress}%</p>
+            </div>))}
+        </section>
       </main>
       <footer>footer</footer>
     </>
