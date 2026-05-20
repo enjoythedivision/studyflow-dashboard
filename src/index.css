@@ -17,7 +17,7 @@
   margin-bottom: 1rem;
 }
 
-.form-section {
+.form-section, .stats-section, .course-list {
   background: white;
   padding: 1.5rem;
   border-radius: 12px;

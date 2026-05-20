@@ -40,6 +40,14 @@ function App() {
     });
   };
 
+const handleEditCourse = (course) => {
+  setCourse(course);
+};
+
+  const handleDeleteCourse = (id) => {
+    setCourses(courses.filter((course) => course.id !== id));
+  };
+
   return (
     <>
       <Header />
@@ -104,9 +112,7 @@ function App() {
                     value="Intermediate"
                     checked={course.difficulty === "Intermediate"}
                   />
-                  <label htmlFor="intermediate">
-                    Intermediate
-                  </label>
+                  <label htmlFor="intermediate">Intermediate</label>
                 </div>
 
                 <div>
@@ -134,10 +140,7 @@ function App() {
                 />
               </div>
 
-              <button
-                onClick={handleAddCourse}
-                type="submit"
-              >
+              <button onClick={handleAddCourse} type="submit">
                 Add Course
               </button>
             </form>
@@ -150,6 +153,8 @@ function App() {
               <CourseCard
                 key={course.id}
                 course={course}
+                onEdit={handleEditCourse}
+                onDelete={handleDeleteCourse}
               />
             ))}
           </section>

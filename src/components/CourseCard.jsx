@@ -1,4 +1,4 @@
-export default function CourseCard({ course }) {
+export default function CourseCard({ course, onDelete, onEdit }) {
   return (
     <div className="course-card">
       {" "}
@@ -8,6 +8,8 @@ export default function CourseCard({ course }) {
         <p>{course.notes}</p>
         <p>Progress: {course.progress}%</p>
       </div>
+      <button onClick={() => onEdit(course)}>Edit</button>
+      <button onClick={() => onDelete(course.id)}>Delete</button>
     </div>
   );
 }
