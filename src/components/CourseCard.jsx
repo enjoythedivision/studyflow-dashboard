@@ -1,6 +1,12 @@
-export default function CourseCard() {
-    return(
-        <>
-        </>
-    )
+export default function CourseCard({course}) {
+  return (
+    <>
+      <div key={course.id}>
+        <h3>{course.title}</h3>
+        <h4>{course.difficulty}</h4>
+        <p>{course.notes}</p>
+        <p>Progress: {course.progress}%</p>
+      </div>
+    </>
+  );
 }
