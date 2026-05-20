@@ -55,7 +55,9 @@ function App() {
       <main className="dashboard">
         <section className="stats-section">
           <h2>My Stats</h2>
-          { courses.length > 0 ? " " : "Add courses to your dashboard to start generating course stats."}
+          {courses.length > 0
+            ? " "
+            : "Add courses to your dashboard to start generating course stats."}
         </section>
 
         <div className="dashboard-content">
@@ -149,7 +151,7 @@ function App() {
           </section>
 
           <section className="course-list">
-            <h2>My Courses</h2>
+            <h2>My Courses</h2> // !!! an empty array is still truthy, so courses ? ... : ... is ALWAYS true even when there are no courses
             {courses.length > 0 ? (
               <>
                 {courses.map((course) => (
