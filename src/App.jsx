@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./App.css";
 import CourseCard from "./components/CourseCard";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 function App() {
   const [course, setCourse] = useState({
@@ -28,11 +30,17 @@ function App() {
         id: Date.now(),
       },
     ]);
+    setCourse({
+      title: "",
+      progress: 0,
+      difficulty: "Beginner",
+      notes: "",
+    });
   }; //for arrays
 
   return (
     <>
-      <header>header</header>
+      <Header/>
       <main>
         <section>stats</section>
         <section>
@@ -123,7 +131,7 @@ function App() {
           ))}
         </section>
       </main>
-      <footer>footer</footer>
+      <Footer/>
     </>
   );
 }
