@@ -40,9 +40,9 @@ function App() {
     });
   };
 
-const handleEditCourse = (course) => {
-  setCourse(course);
-};
+  const handleEditCourse = (course) => {
+    setCourse(course);
+  };
 
   const handleDeleteCourse = (id) => {
     setCourses(courses.filter((course) => course.id !== id));
@@ -55,10 +55,12 @@ const handleEditCourse = (course) => {
       <main className="dashboard">
         <section className="stats-section">
           <h2>My Stats</h2>
+          { courses.length > 0 ? " " : "Add courses to your dashboard to start generating course stats."}
         </section>
 
         <div className="dashboard-content">
           <section className="form-section">
+            <h2>Add New Course</h2>
             <form>
               <div>
                 <label htmlFor="title">Course Title</label>
@@ -148,15 +150,20 @@ const handleEditCourse = (course) => {
 
           <section className="course-list">
             <h2>My Courses</h2>
-
-            {courses.map((course) => (
-              <CourseCard
-                key={course.id}
-                course={course}
-                onEdit={handleEditCourse}
-                onDelete={handleDeleteCourse}
-              />
-            ))}
+            {courses.length > 0 ? (
+              <>
+                {courses.map((course) => (
+                  <CourseCard
+                    key={course.id}
+                    course={course}
+                    onEdit={handleEditCourse}
+                    onDelete={handleDeleteCourse}
+                  />
+                ))}
+              </>
+            ) : (
+              "You haven't added any courses yet!"
+            )}
           </section>
         </div>
       </main>
