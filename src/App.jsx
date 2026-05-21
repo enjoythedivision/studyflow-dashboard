@@ -76,7 +76,9 @@ function App() {
         <section className="stats-section">
           <h2>My Stats</h2>
           {courses.length > 0
-            ? " "
+            ? (<><div>Total Courses</div>
+            <div>Overall Progress</div>
+            <div>Completed Courses</div></>)
             : "Add courses to your dashboard to start generating course stats."}
         </section>
 
