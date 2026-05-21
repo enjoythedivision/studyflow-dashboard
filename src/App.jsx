@@ -80,6 +80,16 @@ function App() {
     return Math.round(total / courses.length);
   };
 
+  const completedCourses = () => {
+    let total = 0;
+    for (let i = 0; i < courses.length; i++) {
+      if (courses[i].progress == 100) {
+        total += 1;
+      }
+    }
+    return total;
+  };
+
   return (
     <>
       <Header />
@@ -91,7 +101,7 @@ function App() {
             <>
               <div>Total Courses: {courses.length}</div>
               <div>Overall Progress: {overallProgress()}%</div>
-              <div>Completed Courses</div>
+              <div>Completed Courses: {completedCourses()}</div>
             </>
           ) : (
             "Add courses to your dashboard to start generating course stats."
