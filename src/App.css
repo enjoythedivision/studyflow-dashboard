@@ -1,3 +1,13 @@
+body {
+  background: #b2c4db;
+  background: radial-gradient(
+    circle,
+    rgba(178, 196, 219, 1) 0%,
+    rgba(224, 238, 255, 1) 35%,
+    rgb(250, 251, 255) 100%
+  );
+}
+
 .dashboard-content {
   display: flex;
   flex-direction: column;
@@ -54,7 +64,9 @@ textarea {
   border-radius: var(--radius);
   background: var(--color-surface);
   color: var(--color-heading);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 input[type="text"]::placeholder,
@@ -99,7 +111,9 @@ input[type="range"] {
   background: var(--color-bg);
   font-size: 0.875rem;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
 }
 
 .radio-option:has(input:checked) {
@@ -150,7 +164,9 @@ input[type="range"] {
   margin-bottom: 0;
   min-height: auto;
   box-shadow: var(--shadow-sm);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .course-card:hover {
@@ -206,7 +222,9 @@ input[type="range"] {
   border: 1px solid var(--color-border-strong);
   background: var(--color-surface);
   color: var(--color-heading);
-  transition: background 0.15s ease, border-color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .course-card > button:hover {
