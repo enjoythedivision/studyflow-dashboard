@@ -63,8 +63,8 @@ function App() {
         <div className="dashboard-content">
           <section className="form-section">
             <h2>Add New Course</h2>
-            <form>
-              <div>
+            <form className="course-form">
+              <div className="form-group">
                 <label htmlFor="title">Course Title</label>
 
                 <input
@@ -77,8 +77,8 @@ function App() {
                 />
               </div>
 
-              <div>
-                <label htmlFor="progress">Progress</label>
+              <div className="form-group">
+                <label htmlFor="progress">Progress ({course.progress}%)</label>
 
                 <input
                   onChange={handleChange}
@@ -92,47 +92,49 @@ function App() {
                 />
               </div>
 
-              <div>
+              <div className="form-group">
                 <label>Difficulty</label>
 
-                <div>
-                  <input
-                    onChange={handleChange}
-                    type="radio"
-                    id="beginner"
-                    name="difficulty"
-                    value="Beginner"
-                    checked={course.difficulty === "Beginner"}
-                  />
-                  <label htmlFor="beginner">Beginner</label>
-                </div>
+                <div className="radio-group">
+                  <div className="radio-option">
+                    <input
+                      onChange={handleChange}
+                      type="radio"
+                      id="beginner"
+                      name="difficulty"
+                      value="Beginner"
+                      checked={course.difficulty === "Beginner"}
+                    />
+                    <label htmlFor="beginner">Beginner</label>
+                  </div>
 
-                <div>
-                  <input
-                    onChange={handleChange}
-                    type="radio"
-                    id="intermediate"
-                    name="difficulty"
-                    value="Intermediate"
-                    checked={course.difficulty === "Intermediate"}
-                  />
-                  <label htmlFor="intermediate">Intermediate</label>
-                </div>
+                  <div className="radio-option">
+                    <input
+                      onChange={handleChange}
+                      type="radio"
+                      id="intermediate"
+                      name="difficulty"
+                      value="Intermediate"
+                      checked={course.difficulty === "Intermediate"}
+                    />
+                    <label htmlFor="intermediate">Intermediate</label>
+                  </div>
 
-                <div>
-                  <input
-                    onChange={handleChange}
-                    type="radio"
-                    id="advanced"
-                    name="difficulty"
-                    value="Advanced"
-                    checked={course.difficulty === "Advanced"}
-                  />
-                  <label htmlFor="advanced">Advanced</label>
+                  <div className="radio-option">
+                    <input
+                      onChange={handleChange}
+                      type="radio"
+                      id="advanced"
+                      name="difficulty"
+                      value="Advanced"
+                      checked={course.difficulty === "Advanced"}
+                    />
+                    <label htmlFor="advanced">Advanced</label>
+                  </div>
                 </div>
               </div>
 
-              <div>
+              <div className="form-group">
                 <label htmlFor="notes">Notes</label>
 
                 <textarea
@@ -144,14 +146,21 @@ function App() {
                 />
               </div>
 
-              <button onClick={handleAddCourse} type="submit">
+              <button
+                className="submit-btn"
+                onClick={handleAddCourse}
+                type="submit"
+              >
                 Add Course
               </button>
             </form>
           </section>
 
+          {/* !!! an empty array is still truthy, so courses ? ... : ... is ALWAYS
+          true even when there are no courses */}
+
           <section className="course-list">
-            <h2>My Courses</h2> // !!! an empty array is still truthy, so courses ? ... : ... is ALWAYS true even when there are no courses
+            <h2>My Courses</h2>
             {courses.length > 0 ? (
               <>
                 {courses.map((course) => (
