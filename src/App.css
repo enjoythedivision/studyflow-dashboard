@@ -1,8 +1,8 @@
 body {
   background: #b2c4db;
   background: radial-gradient(
-    circle,
-    rgba(178, 196, 219, 1) 0%,
+    circle at bottom left,
+    rgb(164, 185, 213) 0%,
     rgba(224, 238, 255, 1) 35%,
     rgb(250, 251, 255) 100%
   );
