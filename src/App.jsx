@@ -68,6 +68,18 @@ function App() {
     setCourses(courses.filter((course) => course.id !== id));
   };
 
+  const overallProgress = () => {
+    if (courses.length === 0) return 0;
+
+    let total = 0;
+
+    for (let i = 0; i < courses.length; i++) {
+      total += Number(courses[i].progress);
+    }
+
+    return Math.round(total / courses.length);
+  };
+
   return (
     <>
       <Header />
@@ -75,11 +87,15 @@ function App() {
       <main className="dashboard">
         <section className="stats-section">
           <h2>My Stats</h2>
-          {courses.length > 0
-            ? (<><div>Total Courses: {courses.length}</div>
-            <div>Overall Progress</div>
-            <div>Completed Courses</div></>)
-            : "Add courses to your dashboard to start generating course stats."}
+          {courses.length > 0 ? (
+            <>
+              <div>Total Courses: {courses.length}</div>
+              <div>Overall Progress: {overallProgress()}%</div>
+              <div>Completed Courses</div>
+            </>
+          ) : (
+            "Add courses to your dashboard to start generating course stats."
+          )}
         </section>
 
         <div className="dashboard-content">
