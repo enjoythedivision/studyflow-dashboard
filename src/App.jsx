@@ -14,6 +14,8 @@ function App() {
 
   const [courses, setCourses] = useState([]);
 
+  const [editingId, setEditingId] = useState(null);
+
   const handleChange = (e) => {
     setCourse({
       ...course,
@@ -24,13 +26,30 @@ function App() {
   const handleAddCourse = (e) => {
     e.preventDefault();
 
-    setCourses([
-      ...courses,
-      {
-        ...course,
-        id: Date.now(),
-      },
-    ]);
+    if (editingId) {
+      setCourses(
+        courses.map((currentCourse) => {
+          if (currentCourse.id === editingId) {
+            return {
+              ...course,
+              id: editingId,
+            };
+          }
+
+          return currentCourse;
+        }),
+      );
+
+      setEditingId(null);
+    } else {
+      setCourses([
+        ...courses,
+        {
+          ...course,
+          id: Date.now(),
+        },
+      ]);
+    }
 
     setCourse({
       title: "",
@@ -40,8 +59,9 @@ function App() {
     });
   };
 
-  const handleEditCourse = (course) => {
-    setCourse(course);
+  const handleEditCourse = (courseToEdit) => {
+    setCourse(courseToEdit);
+    setEditingId(courseToEdit.id);
   };
 
   const handleDeleteCourse = (id) => {
@@ -151,7 +171,7 @@ function App() {
                 onClick={handleAddCourse}
                 type="submit"
               >
-                Add Course
+                {editingId ? "Save Changes" : "Add Course"}
               </button>
             </form>
           </section>
