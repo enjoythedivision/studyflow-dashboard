@@ -1,16 +1,39 @@
-# React + Vite
+# StudyFlow Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live Demo: https://studyflow-dashboard-client.vercel.app/
 
-Currently, two official plugins are available:
+## About
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+StudyFlow Dashboard is a simple CRUD course tracking web app I built to practice React fundamentals and get more comfortable with building + designing full frontend projects from scratch.
 
-## React Compiler
+The idea is pretty straightforward: you can add courses you’re currently learning, track progress, and keep notes for each one. Everything updates in real time and is saved in the browser so it persists after refresh (front end only, not persistent on a server).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This project was mainly about getting better at handling state in React, working with forms, and structuring a project in a scalable way.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Add new courses with title, progress, difficulty, and notes  
+- Edit existing courses  
+- Delete individual courses  
+- Clear all courses at once  
+- Live search/filter through courses  
+- Progress and completion stats  
+- Data persistence using localStorage  
+- Responsive dashboard-style layout  
+
+## Tech Stack
+
+- React (with Vite)
+- JavaScript (ES6+)
+- CSS
+- localStorage for persistence
+
+## Possible improvements
+
+I plan to continue working on this projects and intent to:
+
+- Add authentication (mock or real)
+- Move state logic into custom hooks
+- Improve UI/UX styling and animations
+- Add categories or tags for courses
+- Add better filtering and sorting options
