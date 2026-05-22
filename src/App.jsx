@@ -120,7 +120,7 @@ function App() {
               <div>Completed Courses: {completedCourses()}</div>
             </>
           ) : (
-            "Add courses to your dashboard to start generating course stats."
+            <p>Add courses to your dashboard to start generating course stats.</p>
           )}
         </section>
 
@@ -224,24 +224,35 @@ function App() {
           true even when there are no courses */}
 
           <section className="course-list">
-            <h2>My Courses</h2>
-            {courses.length > 0 ? (
-              <>
-                {" "}
-                <button className="submit-btn" onClick={handleClearCourses}>
+            <div className="course-list__header">
+              <h2>My Courses</h2>
+              {courses.length > 0 ? (
+                <button
+                  type="button"
+                  className="clear-btn"
+                  onClick={handleClearCourses}
+                >
                   Clear all
                 </button>
-                {courses.map((course) => (
-                  <CourseCard
-                    key={course.id}
-                    course={course}
-                    onEdit={handleEditCourse}
-                    onDelete={handleDeleteCourse}
-                  />
-                ))}
+              ) : null}
+            </div>
+            {courses.length > 0 ? (
+              <>
+                <div className="course-list__list">
+                  {courses.map((course) => (
+                    <CourseCard
+                      key={course.id}
+                      course={course}
+                      onEdit={handleEditCourse}
+                      onDelete={handleDeleteCourse}
+                    />
+                  ))}
+                </div>
               </>
             ) : (
-              "You haven't added any courses yet!"
+              <p className="course-list__empty">
+                You haven&apos;t added any courses yet!
+              </p>
             )}
           </section>
         </div>
