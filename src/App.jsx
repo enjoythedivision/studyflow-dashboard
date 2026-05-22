@@ -12,6 +12,8 @@ function App() {
     notes: "",
   });
 
+  const [search, setSearch] = useState("");
+
   const [courses, setCourses] = useState(() => {
     const savedCourses = localStorage.getItem("courses");
 
@@ -80,6 +82,10 @@ function App() {
     setCourses([]);
   };
 
+  const filteredCourses = courses.filter((course) =>
+    course.title.toLowerCase().includes(search.toLowerCase()),
+  );
+
   const overallProgress = () => {
     if (courses.length === 0) return 0;
 
@@ -108,8 +114,7 @@ function App() {
 
   return (
     <>
-      <Header />
-
+      <Header search={search} setSearch={setSearch} />
       <main className="dashboard">
         <section className="stats-section">
           <h2>My Stats</h2>
@@ -120,7 +125,9 @@ function App() {
               <div>Completed Courses: {completedCourses()}</div>
             </>
           ) : (
-            <p>Add courses to your dashboard to start generating course stats.</p>
+            <p>
+              Add courses to your dashboard to start generating course stats.
+            </p>
           )}
         </section>
 
@@ -239,7 +246,7 @@ function App() {
             {courses.length > 0 ? (
               <>
                 <div className="course-list__list">
-                  {courses.map((course) => (
+                  {filteredCourses.map((course) => (
                     <CourseCard
                       key={course.id}
                       course={course}
