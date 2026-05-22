@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import CourseCard from "./components/CourseCard";
 import Footer from "./components/Footer";
@@ -12,8 +12,15 @@ function App() {
     notes: "",
   });
 
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState(() => {
+    const savedCourses = localStorage.getItem("courses");
 
+    if (savedCourses) {
+      return JSON.parse(savedCourses);
+    }
+
+    return [];
+  });
   const [editingId, setEditingId] = useState(null);
 
   const handleChange = (e) => {
@@ -89,6 +96,10 @@ function App() {
     }
     return total;
   };
+
+  useEffect(() => {
+    localStorage.setItem("courses", JSON.stringify(courses));
+  }, [courses]);
 
   return (
     <>
