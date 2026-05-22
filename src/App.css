@@ -379,12 +379,17 @@ input[type="range"] {
 .header {
   display: flex;
   align-items: center;
+  gap: var(--space-lg);
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
   padding: var(--space-lg) var(--space-xl);
   background: var(--surface);
   font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--neutral-900);
+  box-sizing: border-box;
 }
 
 .header span:last-child {
@@ -468,7 +473,7 @@ footer:empty {
 
 @media (max-width: 640px) {
   .header {
-    padding: var(--space-md) var(--space-lg);
+    padding: var(--space-md) var(--space-md);
     font-size: 1.375rem;
   }
 
@@ -479,6 +484,11 @@ footer:empty {
 }
 
 @media (min-width: 1024px) {
+  .header {
+    padding-left: var(--space-3xl);
+    padding-right: var(--space-3xl);
+  }
+
   .dashboard {
     padding: var(--space-2xl) var(--space-3xl);
   }
