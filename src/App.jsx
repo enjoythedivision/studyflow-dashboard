@@ -21,6 +21,7 @@ function App() {
 
     return [];
   });
+
   const [editingId, setEditingId] = useState(null);
 
   const handleChange = (e) => {
@@ -73,6 +74,10 @@ function App() {
 
   const handleDeleteCourse = (id) => {
     setCourses(courses.filter((course) => course.id !== id));
+  };
+
+  const handleClearCourses = () => {
+    setCourses([]);
   };
 
   const overallProgress = () => {
@@ -222,6 +227,10 @@ function App() {
             <h2>My Courses</h2>
             {courses.length > 0 ? (
               <>
+                {" "}
+                <button className="submit-btn" onClick={handleClearCourses}>
+                  Clear all
+                </button>
                 {courses.map((course) => (
                   <CourseCard
                     key={course.id}
