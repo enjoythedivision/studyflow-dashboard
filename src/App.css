@@ -116,6 +116,12 @@ textarea:focus {
   outline-offset: 0;
 }
 
+input.search:focus
+{
+  outline: none;
+  outline-offset: 0;
+}
+
 textarea {
   resize: vertical;
   min-height: 6rem;

@@ -8,6 +8,7 @@ export default function Header({ search, setSearch }) {
       </div>
 
       <input
+        className="search"
         type="text"
         placeholder="Search for a course..."
         value={search}
