@@ -116,8 +116,7 @@ textarea:focus {
   outline-offset: 0;
 }
 
-input.search:focus
-{
+input.search:focus {
   outline: none;
   outline-offset: 0;
 }
@@ -492,4 +491,15 @@ footer:empty {
   .dashboard {
     padding: var(--space-2xl) var(--space-3xl);
   }
+}
+
+.auth {
+  height: 100vh;
+  background: #ffc187;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 193, 135, 1) 0%,
+    rgba(255, 227, 201, 1) 25%,
+    rgba(245, 245, 245, 1) 48%
+  );
 }

@@ -4,6 +4,12 @@
       "email": "test@test.com",
       "password": "$2a$10$pB1Ci2XZlmlFtil0ShqhJOz44HiqnP0xs0/Dv2bmk0objDj9.TEbq",
       "id": 1
+    },
+    {
+      "email": "marialapps@gmail.com",
+      "password": "$2a$10$nm.tUAOCVvF6.BhiHStZeOyZiOSFd0sUlB8tjMnnVt59t/bYxFW.S",
+      "username": "maria",
+      "id": 2
     }
   ],
   "courses": []
