@@ -1,41 +1,85 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import AuthCard from "./AuthCard";
 
-import { useState } from "react"
+export default function Signup() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    username: "",
+  });
 
-function Signup() {
-    const [formData, setFormData] = useState({
-        email: '', // required
-        password: '', // required
-        username: '' // optional
+  function handleSubmit(e) {
+    e.preventDefault();
+    fetch("http://localhost:3000/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
     })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  }
 
-    function handleSubmit(e) {
-        e.preventDefault()
-        fetch('http://localhost:3000/users', {
-            method: 'POST',
-            headers: {'Content-Type' : 'application/json'},
-            body: JSON.stringify(formData)
-        })
-        .then(res => res.json())
-        .then(data => console.log(data))
-    }
+  function handleChange(e) {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  }
 
-    function handleChange(e) {
-        setFormData({...formData, [e.target.name] : e.target.value})
-    }
-
-    return (
-        <div className="auth">
-            <h1>Welcome to StudyFlow!</h1>
-            <form className='login-form' onSubmit={e => handleSubmit(e)}>
-                <input type='text' placeholder='Username' value={formData.username} name='username' onChange={e => handleChange(e)} ></input>
-                <input type='text' placeholder='Email' value={formData.email} name='email' onChange={e => handleChange(e)} ></input>
-                <input type='text' placeholder='Password' value={formData.password} name='password' onChange={e => handleChange(e)} ></input>
-                <button className='login-btn' type='submit'>Sign Up</button>
-            </form>
-            <p>Already have an account? <Link to="/login">Sign in here.</Link></p>
+  return (
+    <AuthCard
+      title="Create your account"
+      subtitle="Start tracking your courses with StudyFlow"
+      footer={
+        <p className="auth__footer">
+          Already have an account? <Link to="/login">Log in</Link>
+        </p>
+      }
+    >
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Your username"
+            value={formData.username}
+            onChange={handleChange}
+          />
         </div>
-    )
-}
 
-export default Signup
+        <div className="form-group">
+          <label htmlFor="signup-email">Email</label>
+          <input
+            type="email"
+            id="signup-email"
+            name="email"
+            placeholder="you@example.com"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="signup-password">Password</label>
+          <input
+            type="password"
+            id="signup-password"
+            name="password"
+            placeholder="Choose a password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <button className="submit-btn" type="submit">
+          Sign up
+        </button>
+      </form>
+    </AuthCard>
+  );
+}

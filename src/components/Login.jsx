@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import AuthCard from "./AuthCard";
 
-function Login({ setUser }) {
+export default function Login({ setUser }) {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -20,9 +21,7 @@ function Login({ setUser }) {
       .then((res) => res.json())
       .then((data) => {
         setUser(data.user);
-
         localStorage.setItem("user", JSON.stringify(data.user));
-
         navigate("/");
       });
   }
@@ -35,34 +34,46 @@ function Login({ setUser }) {
   }
 
   return (
-    <div className="auth">
-      <h1>Welcome back!</h1>
+    <AuthCard
+      title="Welcome back"
+      subtitle="Sign in to manage your courses"
+      footer={
+        <p className="auth__footer">
+          Don&apos;t have an account? <Link to="/signup">Sign up</Link>
+        </p>
+      }
+    >
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@example.com"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-      <form className="login-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Your password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-
-        <button className="login-btn" type="submit">
-          Login
+        <button className="submit-btn" type="submit">
+          Log in
         </button>
       </form>
-
-      <p>Don't have an account? <Link to ="/signup">Sign up here.</Link></p>
-    </div>
+    </AuthCard>
   );
 }
-
-export default Login;
