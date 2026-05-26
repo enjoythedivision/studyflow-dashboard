@@ -1,3 +1,10 @@
 {
- "users": []
+  "users": [
+    {
+      "email": "test@test.com",
+      "password": "$2a$10$pB1Ci2XZlmlFtil0ShqhJOz44HiqnP0xs0/Dv2bmk0objDj9.TEbq",
+      "id": 1
+    }
+  ],
+  "courses": []
 }
