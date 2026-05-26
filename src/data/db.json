@@ -10,7 +10,30 @@
       "password": "$2a$10$nm.tUAOCVvF6.BhiHStZeOyZiOSFd0sUlB8tjMnnVt59t/bYxFW.S",
       "username": "maria",
       "id": 2
+    },
+    {
+      "email": "test@example.com",
+      "password": "$2a$10$SBOXiDJBQ2O1Ieeeer0lSuyixVscQ59z4lt/kB5P2.0R118OYMroS",
+      "username": "test_user_1",
+      "id": 3
     }
   ],
-  "courses": []
+  "courses": [
+    {
+      "title": "Test user's course 1",
+      "progress": "90",
+      "difficulty": "Advanced",
+      "notes": "This is a test note",
+      "userId": 3,
+      "id": 1
+    },
+    {
+      "title": "1",
+      "progress": 0,
+      "difficulty": "Beginner",
+      "notes": "2",
+      "userId": 3,
+      "id": 5
+    }
+  ]
 }

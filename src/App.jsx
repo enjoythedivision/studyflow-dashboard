@@ -11,16 +11,30 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 
 export default function App() {
-  const [user, setUser] = useState(null);
+  // USER (AUTH)
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
     }
-  }, []);
+  }, [user]);
 
+  // COURSES (PER USER)
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    fetch(`http://localhost:3000/courses?userId=${user.id}`)
+      .then((res) => res.json())
+      .then((data) => setCourses(data));
+  }, [user]);
+
+  // COURSE FORM STATE
   const [course, setCourse] = useState({
     title: "",
     progress: 0,
@@ -29,14 +43,9 @@ export default function App() {
   });
 
   const [search, setSearch] = useState("");
-
-  const [courses, setCourses] = useState(() => {
-    const savedCourses = localStorage.getItem("courses");
-    return savedCourses ? JSON.parse(savedCourses) : [];
-  });
-
   const [editingId, setEditingId] = useState(null);
 
+  // HANDLERS
   const handleChange = (e) => {
     setCourse({
       ...course,
@@ -44,27 +53,43 @@ export default function App() {
     });
   };
 
+  // CREATE COURSE (API)
   const handleAddCourse = (e) => {
     e.preventDefault();
 
     if (editingId) {
-      setCourses(
-        courses.map((currentCourse) =>
-          currentCourse.id === editingId
-            ? { ...course, id: editingId }
-            : currentCourse,
-        ),
-      );
+      //EDIT
+      fetch(`http://localhost:3000/courses/${editingId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...course,
+          userId: user.id,
+          id: editingId,
+        }),
+      })
+        .then((res) => res.json())
+        .then((updatedCourse) => {
+          setCourses((prev) =>
+            prev.map((c) => (c.id === editingId ? updatedCourse : c)),
+          );
+        });
 
       setEditingId(null);
     } else {
-      setCourses([
-        ...courses,
-        {
+      //ADD NEW
+      fetch("http://localhost:3000/courses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           ...course,
-          id: Date.now(),
-        },
-      ]);
+          userId: user.id,
+        }),
+      })
+        .then((res) => res.json())
+        .then((newCourse) => {
+          setCourses((prev) => [...prev, newCourse]);
+        });
     }
 
     setCourse({
@@ -76,22 +101,30 @@ export default function App() {
   };
 
   const handleEditCourse = (courseToEdit) => {
-    setCourse(courseToEdit);
-    setEditingId(courseToEdit.id);
-  };
+  setCourse(courseToEdit);
+  setEditingId(courseToEdit.id);
+};
 
+  // DELETE COURSE (API)
   const handleDeleteCourse = (id) => {
-    setCourses(courses.filter((course) => course.id !== id));
+    fetch(`http://localhost:3000/courses/${id}`, {
+      method: "DELETE",
+    }).then(() => {
+      setCourses(courses.filter((course) => course.id !== id));
+    });
   };
 
   const handleClearCourses = () => {
+    // optional local-only clear
     setCourses([]);
   };
 
+  // FILTERING
   const filteredCourses = courses.filter((course) =>
     course.title.toLowerCase().includes(search.toLowerCase()),
   );
 
+  // STATS
   const overallProgress = () => {
     if (courses.length === 0) return 0;
 
@@ -99,24 +132,27 @@ export default function App() {
     for (let i = 0; i < courses.length; i++) {
       total += Number(courses[i].progress);
     }
+
     return Math.round(total / courses.length);
   };
 
   const completedCourses = () => {
     let total = 0;
+
     for (let i = 0; i < courses.length; i++) {
       if (courses[i].progress == 100) total++;
     }
+
     return total;
   };
 
-  useEffect(() => {
-    localStorage.setItem("courses", JSON.stringify(courses));
-  }, [courses]);
+  console.log("USER:", user);
+  // ROUTING
   return (
     <Routes>
       <Route path="/login" element={<Login setUser={setUser} />} />
-      <Route path="/signup" element={<Signup/>}></Route>
+
+      <Route path="/signup" element={<Signup setUser={setUser} />} />
 
       <Route
         path="/"
@@ -144,8 +180,7 @@ export default function App() {
                   </section>
 
                   <CourseList
-                    courses={courses}
-                    filteredCourses={filteredCourses}
+                    courses={filteredCourses}
                     handleEditCourse={handleEditCourse}
                     handleDeleteCourse={handleDeleteCourse}
                     handleClearCourses={handleClearCourses}
