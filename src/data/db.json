@@ -26,14 +26,6 @@
       "notes": "This is a test note",
       "userId": 3,
       "id": 1
-    },
-    {
-      "title": "1",
-      "progress": 0,
-      "difficulty": "Beginner",
-      "notes": "2",
-      "userId": 3,
-      "id": 5
     }
   ]
 }

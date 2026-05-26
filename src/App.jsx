@@ -101,9 +101,9 @@ export default function App() {
   };
 
   const handleEditCourse = (courseToEdit) => {
-  setCourse(courseToEdit);
-  setEditingId(courseToEdit.id);
-};
+    setCourse(courseToEdit);
+    setEditingId(courseToEdit.id);
+  };
 
   // DELETE COURSE (API)
   const handleDeleteCourse = (id) => {
@@ -159,8 +159,12 @@ export default function App() {
         element={
           user ? (
             <>
-              <Header search={search} setSearch={setSearch} />
-
+              <Header
+                search={search}
+                setSearch={setSearch}
+                user={user}
+                setUser={setUser}
+              />
               <main className="dashboard">
                 <StatsSection
                   courses={courses}
