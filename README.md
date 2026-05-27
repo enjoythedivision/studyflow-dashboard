@@ -1,39 +1,44 @@
-# StudyFlow Dashboard
+StudyFlow Dashboard / Live demo: https://studyflow-dashboard-client.vercel.app/
 
-Live Demo: https://studyflow-dashboard-client.vercel.app/
+This is a small React app for managing personal courses.
 
-## About
+Each user can log in, see their own courses, and create, edit, or delete them. The data is stored in a mock backend (json-server), and the app uses localStorage to keep the user session.
 
-StudyFlow Dashboard is a simple CRUD course tracking web app I built to practice React fundamentals and get more comfortable with building + designing full frontend projects from scratch.
+How it works
 
-The idea is pretty straightforward: you can add courses you’re currently learning, track progress, and keep notes for each one. Everything updates in real time and is saved in the browser so it persists after refresh (front end only, not persistent on a server).
+When a user logs in, the app stores the user in localStorage and in React state. If no user is found, the app redirects to the login page.
 
-This project was mainly about getting better at handling state in React, working with forms, and structuring a project in a scalable way.
+Once logged in, the dashboard loads only the courses that belong to that user using their userId.
 
-## Features
+Courses are fetched from the backend, and each course is linked to a user.
 
-- Add new courses with title, progress, difficulty, and notes  
-- Edit existing courses  
-- Delete individual courses  
-- Clear all courses at once  
-- Live search/filter through courses  
-- Progress and completion stats  
-- Data persistence using localStorage  
-- Responsive dashboard-style layout  
+Main features
 
-## Tech Stack
+- Login and signup using a fake backend
+- Protected dashboard (only accessible when logged in)
+- Create, edit, and delete courses
+- Search through courses
+- Basic stats based on course progress
+- Persistent login using localStorage
 
-- React (with Vite)
-- JavaScript (ES6+)
-- CSS
-- localStorage for persistence
+Data flow
 
-## Possible improvements
+Login -> user stored in state and localStorage  
+Dashboard load -> fetch courses by userId  
+Add/edit/delete -> update backend and sync state
 
-I plan to continue working on this projects and intent to:
+Tech stack
 
-- Add authentication (mock or real)
-- Move state logic into custom hooks
-- Improve UI/UX styling and animations
-- Add categories or tags for courses
-- Add better filtering and sorting options
+- React
+- React Router
+- useState and useEffect
+- JSON Server
+- localStorage
+
+What I learned
+
+- Handling authentication flow in React
+- Connecting React to an API
+- CRUD operations with a backend
+- Component structure and state management
+- Persisting user session in the browser
