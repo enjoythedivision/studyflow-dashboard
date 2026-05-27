@@ -1,4 +1,5 @@
 export default function Header({ search, setSearch, user, setUser }) {
+  
   //TODO: Fix header responsiveness
   const handleLogout = () => {
     localStorage.removeItem("user");
