@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthCard from "./AuthCard";
 
-export default function Signup() {
+export default function Signup({ setUser }) {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -11,13 +13,34 @@ export default function Signup() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    fetch("http://localhost:3000/users", {
+
+    fetch("http://localhost:3000/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then(async (res) => {
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data || "Signup failed");
+        }
+
+        return data;
+      })
+      .then((data) => {
+        if (!data.user) {
+          throw new Error("Invalid signup response");
+        }
+
+        setUser(data.user);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Signup failed:", error.message);
+        alert(error.message || "Signup failed");
+      });
   }
 
   function handleChange(e) {

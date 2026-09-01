@@ -13,13 +13,26 @@ import Signup from "./components/Signup";
 export default function App() {
   // USER (AUTH)
   const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
+    try {
+      const savedUser = localStorage.getItem("user");
+      if (!savedUser || savedUser === "undefined") {
+        localStorage.removeItem("user");
+        return null;
+      }
+
+      const parsed = JSON.parse(savedUser);
+      return parsed && typeof parsed === "object" ? parsed : null;
+    } catch (error) {
+      localStorage.removeItem("user");
+      return null;
+    }
   });
 
   useEffect(() => {
     if (user) {
       localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
     }
   }, [user]);
 

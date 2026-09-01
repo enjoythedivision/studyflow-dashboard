@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "mock-api": "json-server-auth src/data/db.json --watch --port 3000",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

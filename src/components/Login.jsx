@@ -18,11 +18,27 @@ export default function Login({ setUser }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data || "Login failed");
+        }
+
+        return data;
+      })
       .then((data) => {
+        if (!data.user) {
+          throw new Error("Invalid login response");
+        }
+
         setUser(data.user);
         localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/");
+      })
+      .catch((error) => {
+        console.error("Login failed:", error.message);
+        alert(error.message || "Login failed");
       });
   }
 
