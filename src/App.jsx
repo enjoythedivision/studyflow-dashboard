@@ -36,16 +36,8 @@ export default function App() {
     }
   }, [user]);
 
-  // COURSES (PER USER)
+  // COURSES (PER USER - LOCAL ONLY)
   const [courses, setCourses] = useState([]);
-
-  useEffect(() => {
-    if (!user) return;
-
-    fetch(`http://localhost:3000/courses?userId=${user.id}`)
-      .then((res) => res.json())
-      .then((data) => setCourses(data));
-  }, [user]);
 
   // COURSE FORM STATE
   const [course, setCourse] = useState({
@@ -66,43 +58,26 @@ export default function App() {
     });
   };
 
-  // CREATE COURSE (API)
+  // CREATE COURSE (LOCAL ONLY)
   const handleAddCourse = (e) => {
     e.preventDefault();
 
     if (editingId) {
-      //EDIT
-      fetch(`http://localhost:3000/courses/${editingId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...course,
-          userId: user.id,
-          id: editingId,
-        }),
-      })
-        .then((res) => res.json())
-        .then((updatedCourse) => {
-          setCourses((prev) =>
-            prev.map((c) => (c.id === editingId ? updatedCourse : c)),
-          );
-        });
-
+      // EDIT
+      setCourses((prev) =>
+        prev.map((c) =>
+          c.id === editingId ? { ...course, id: editingId, userId: user.id } : c
+        )
+      );
       setEditingId(null);
     } else {
-      //ADD NEW
-      fetch("http://localhost:3000/courses", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...course,
-          userId: user.id,
-        }),
-      })
-        .then((res) => res.json())
-        .then((newCourse) => {
-          setCourses((prev) => [...prev, newCourse]);
-        });
+      // ADD NEW
+      const newCourse = {
+        ...course,
+        id: Date.now(),
+        userId: user.id,
+      };
+      setCourses((prev) => [...prev, newCourse]);
     }
 
     setCourse({
@@ -118,13 +93,9 @@ export default function App() {
     setEditingId(courseToEdit.id);
   };
 
-  // DELETE COURSE (API)
+  // DELETE COURSE (LOCAL ONLY)
   const handleDeleteCourse = (id) => {
-    fetch(`http://localhost:3000/courses/${id}`, {
-      method: "DELETE",
-    }).then(() => {
-      setCourses(courses.filter((course) => course.id !== id));
-    });
+    setCourses(courses.filter((course) => course.id !== id));
   };
 
   const handleClearCourses = () => {

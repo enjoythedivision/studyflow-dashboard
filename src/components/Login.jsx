@@ -12,34 +12,14 @@ export default function Login({ setUser }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    fetch("http://localhost:3000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then(async (res) => {
-        const data = await res.json();
-
-        if (!res.ok) {
-          throw new Error(data || "Login failed");
-        }
-
-        return data;
-      })
-      .then((data) => {
-        if (!data.user) {
-          throw new Error("Invalid login response");
-        }
-
-        setUser(data.user);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Login failed:", error.message);
-        alert(error.message || "Login failed");
-      });
+    // Mock login - replace with real auth later
+    const user = {
+      id: 1,
+      email: formData.email,
+    };
+    setUser(user);
+    localStorage.setItem("user", JSON.stringify(user));
+    navigate("/");
   }
 
   function handleChange(e) {

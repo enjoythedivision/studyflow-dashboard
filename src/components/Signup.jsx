@@ -13,34 +13,15 @@ export default function Signup({ setUser }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    fetch("http://localhost:3000/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then(async (res) => {
-        const data = await res.json();
-
-        if (!res.ok) {
-          throw new Error(data || "Signup failed");
-        }
-
-        return data;
-      })
-      .then((data) => {
-        if (!data.user) {
-          throw new Error("Invalid signup response");
-        }
-
-        setUser(data.user);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Signup failed:", error.message);
-        alert(error.message || "Signup failed");
-      });
+    // Mock signup - replace with real auth later
+    const user = {
+      id: Date.now(),
+      email: formData.email,
+      username: formData.username,
+    };
+    setUser(user);
+    localStorage.setItem("user", JSON.stringify(user));
+    navigate("/");
   }
 
   function handleChange(e) {
