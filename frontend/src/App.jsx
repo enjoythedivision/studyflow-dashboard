@@ -24,6 +24,7 @@ export default function App() {
       return parsed && typeof parsed === "object" ? parsed : null;
     } catch (error) {
       localStorage.removeItem("user");
+      console.log(error);
       return null;
     }
   });
@@ -58,6 +59,18 @@ export default function App() {
     });
   };
 
+  // GET COURSES
+  useEffect(() => {
+    async function getCourses() {
+      const response = await fetch("http://localhost:5067/api/Courses");
+      const data = await response.json();
+
+      setCourses(data);
+    }
+
+    getCourses();
+  }, []);
+
   // CREATE COURSE (LOCAL ONLY)
   const handleAddCourse = (e) => {
     e.preventDefault();
@@ -66,8 +79,10 @@ export default function App() {
       // EDIT
       setCourses((prev) =>
         prev.map((c) =>
-          c.id === editingId ? { ...course, id: editingId, userId: user.id } : c
-        )
+          c.id === editingId
+            ? { ...course, id: editingId, userId: user.id }
+            : c,
+        ),
       );
       setEditingId(null);
     } else {
