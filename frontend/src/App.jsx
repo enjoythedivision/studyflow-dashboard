@@ -132,6 +132,20 @@ export default function App() {
     }
   };
 
+  //Clear All
+  const handleClearCourses = async () => {
+    const courses = await getCourses();
+
+    for (const course of courses) {
+      await fetch(`http://localhost:5067/api/Courses/${course.id}`, {
+        method: "DELETE",
+      });
+    }
+
+    const data = await getCourses();
+    setCourses(data);
+  };
+
   // FILTERING & STATS
   const filteredCourses = courses.filter((course) =>
     course.title.toLowerCase().includes(search.toLowerCase()),
@@ -198,6 +212,7 @@ export default function App() {
                   courses={filteredCourses}
                   onDelete={handleDeleteCourse}
                   onEdit={handleEditCourse}
+                  onClear={handleClearCourses}
                 />
               </div>
             </main>
