@@ -119,9 +119,7 @@ export default function App() {
     const courses = await getCourses();
 
     for (const course of courses) {
-      await fetch(`http://localhost:5067/api/Courses/${course.id}`, {
-        method: "DELETE",
-      });
+      await deleteCourse(course.id);
     }
 
     const data = await getCourses();
