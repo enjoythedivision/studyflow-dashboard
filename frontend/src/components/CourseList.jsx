@@ -12,11 +12,7 @@ export default function CourseList({
         <h2>My Courses</h2>
 
         {courses.length > 0 && onClear && (
-          <button
-            type="button"
-            className="clear-btn"
-            onClick={onClear}
-          >
+          <button type="button" className="clear-btn" onClick={onClear}>
             Clear all
           </button>
         )}
