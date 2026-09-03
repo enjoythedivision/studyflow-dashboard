@@ -18,3 +18,18 @@ export async function addCourse(course) {
 
   return response;
 }
+
+export async function updateCourse(courseToEdit) {
+  const response = await fetch(
+    `${API_URL}/${courseToEdit.id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(courseToEdit),
+    }
+  );
+
+  return response;
+}

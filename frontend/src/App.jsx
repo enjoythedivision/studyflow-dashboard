@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import { getCourses, addCourse } from "./api/coursesApi";
+import { getCourses, addCourse, updateCourse } from "./api/coursesApi";
 
 export default function App() {
   const [user, setUser] = useState();
@@ -76,16 +76,7 @@ export default function App() {
   const handleUpdateCourse = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(
-      `http://localhost:5067/api/Courses/${course.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(course),
-      },
-    );
+    const response = await updateCourse(course);
 
     if (response.ok) {
       setCourse({
