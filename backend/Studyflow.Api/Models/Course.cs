@@ -7,7 +7,7 @@ public class Course
 
     public required string Title { get; set; }
 
-    public string Notes { get; set; }
+    public string? Notes { get; set; }
 
     [Range(0, 100)]
     public int Progress { get; set; }
