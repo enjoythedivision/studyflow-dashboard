@@ -6,3 +6,15 @@ export async function getCourses() {
 
   return data;
 }
+
+export async function addCourse(course) {
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(course),
+  });
+
+  return response;
+}

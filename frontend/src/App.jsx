@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import { getCourses } from "./api/coursesApi";
+import { getCourses, addCourse } from "./api/coursesApi";
 
 export default function App() {
   const [user, setUser] = useState();
@@ -45,32 +45,25 @@ export default function App() {
 
   // Create Course
   const handleAddCourse = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  const response = await addCourse(course);
 
-    const response = await fetch("http://localhost:5067/api/Courses", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(course),
+  if (response.ok) {
+    setCourse({
+      title: "",
+      progress: 0,
+      difficulty: "Beginner",
+      notes: "",
     });
 
-    if (response.ok) {
-      setCourse({
-        title: "",
-        progress: 0,
-        difficulty: "Beginner",
-        notes: "",
-      });
+    const data = await getCourses();
+    setCourses(data);
 
-      const data = await getCourses();
-      setCourses(data);
-
-      alert("Course added successfully.");
-    } else {
-      alert("Failed to add course.");
-    }
-  };
+    alert("Course added successfully.");
+  } else {
+    alert("Failed to add course.");
+  }
+};
 
   //Update Course
   // > CLICK "EDIT" ON A COURSE
