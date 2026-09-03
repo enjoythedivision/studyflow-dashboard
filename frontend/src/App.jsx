@@ -11,7 +11,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 
 export default function App() {
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
   const [courses, setCourses] = useState([]);
 
   // COURSE FORM STATE
@@ -32,7 +32,7 @@ export default function App() {
     });
   };
 
-  // GET COURSES
+  // Get Courses
   async function getCourses() {
     const response = await fetch("http://localhost:5067/api/Courses");
     const data = await response.json();
@@ -48,7 +48,7 @@ export default function App() {
     loadCourses();
   }, []);
 
-  // CREATE COURSE
+  // Create Course
   const handleAddCourse = async (e) => {
     e.preventDefault();
 
@@ -71,19 +71,55 @@ export default function App() {
       const data = await getCourses();
       setCourses(data);
 
-
       alert("Course added successfully.");
     } else {
       alert("Failed to add course.");
     }
   };
 
-  // FILTERING
+  //Update Course
+  // > CLICK "EDIT" ON A COURSE
+  const handleEditCourse = (courseToEdit) => {
+    setCourse(courseToEdit);
+  };
+
+  // > CLICK "UPDATE" IN THE FORM
+  const handleUpdateCourse = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch(
+      `http://localhost:5067/api/Courses/${course.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(course),
+      },
+    );
+
+    if (response.ok) {
+      setCourse({
+        title: "",
+        progress: 0,
+        difficulty: "Beginner",
+        notes: "",
+      });
+
+      const data = await getCourses();
+      setCourses(data);
+
+      alert("Course updated successfully.");
+    } else {
+      alert("Failed to update course.");
+    }
+  };
+
+  // FILTERING & STATS
   const filteredCourses = courses.filter((course) =>
     course.title.toLowerCase().includes(search.toLowerCase()),
   );
 
-  // STATS
   const overallProgress = () => {
     if (courses.length === 0) return 0;
 
