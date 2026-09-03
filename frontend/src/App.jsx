@@ -9,7 +9,12 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import { getCourses, addCourse, updateCourse } from "./api/coursesApi";
+import {
+  getCourses,
+  addCourse,
+  updateCourse,
+  deleteCourse,
+} from "./api/coursesApi";
 
 export default function App() {
   const [user, setUser] = useState();
@@ -45,25 +50,25 @@ export default function App() {
 
   // Create Course
   const handleAddCourse = async (e) => {
-  e.preventDefault();
-  const response = await addCourse(course);
+    e.preventDefault();
+    const response = await addCourse(course);
 
-  if (response.ok) {
-    setCourse({
-      title: "",
-      progress: 0,
-      difficulty: "Beginner",
-      notes: "",
-    });
+    if (response.ok) {
+      setCourse({
+        title: "",
+        progress: 0,
+        difficulty: "Beginner",
+        notes: "",
+      });
 
-    const data = await getCourses();
-    setCourses(data);
+      const data = await getCourses();
+      setCourses(data);
 
-    alert("Course added successfully.");
-  } else {
-    alert("Failed to add course.");
-  }
-};
+      alert("Course added successfully.");
+    } else {
+      alert("Failed to add course.");
+    }
+  };
 
   //Update Course
   // > CLICK "EDIT" ON A COURSE
@@ -97,9 +102,7 @@ export default function App() {
 
   //Delete Course
   const handleDeleteCourse = async (id) => {
-    const response = await fetch(`http://localhost:5067/api/Courses/${id}`, {
-      method: "DELETE",
-    });
+    const response = await deleteCourse(id);
 
     if (response.ok) {
       const data = await getCourses();

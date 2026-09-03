@@ -33,3 +33,11 @@ export async function updateCourse(courseToEdit) {
 
   return response;
 }
+
+export async function deleteCourse(courseToDelete) {
+  const response = await fetch(`${API_URL}/${courseToDelete.id}`, {
+    method: "DELETE",
+  });
+
+  return response;
+}
