@@ -13,6 +13,8 @@ import Signup from "./components/Signup";
 export default function App() {
   const [user, setUser] = useState();
   const [courses, setCourses] = useState([]);
+  const [editingId, setEditingId] = useState(null);
+  const [search, setSearch] = useState("");
 
   // COURSE FORM STATE
   const [course, setCourse] = useState({
@@ -21,8 +23,6 @@ export default function App() {
     difficulty: "Beginner",
     notes: "",
   });
-
-  const [search, setSearch] = useState("");
 
   // HANDLER FOR FORM
   const handleChange = (e) => {
@@ -81,6 +81,7 @@ export default function App() {
   // > CLICK "EDIT" ON A COURSE
   const handleEditCourse = (courseToEdit) => {
     setCourse(courseToEdit);
+    setEditingId(courseToEdit.id);
   };
 
   // > CLICK "UPDATE" IN THE FORM
@@ -189,6 +190,7 @@ export default function App() {
                     handleChange={handleChange}
                     handleAddCourse={handleAddCourse}
                     handleUpdateCourse={handleUpdateCourse}
+                    editingId={editingId}
                   />
                 </section>
 
