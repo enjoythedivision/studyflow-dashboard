@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import CourseForm from "./components/CourseForm";
@@ -11,33 +11,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 
 export default function App() {
-  // USER (AUTH)
-  const [user, setUser] = useState(() => {
-    try {
-      const savedUser = localStorage.getItem("user");
-      if (!savedUser || savedUser === "undefined") {
-        localStorage.removeItem("user");
-        return null;
-      }
-
-      const parsed = JSON.parse(savedUser);
-      return parsed && typeof parsed === "object" ? parsed : null;
-    } catch (error) {
-      localStorage.removeItem("user");
-      console.log(error);
-      return null;
-    }
-  });
-
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    } else {
-      localStorage.removeItem("user");
-    }
-  }, [user]);
-
-  // COURSES (PER USER - LOCAL ONLY)
+  const [user, setUser] = useState()
   const [courses, setCourses] = useState([]);
 
   // COURSE FORM STATE
@@ -49,9 +23,8 @@ export default function App() {
   });
 
   const [search, setSearch] = useState("");
-  const [editingId, setEditingId] = useState(null);
 
-  // HANDLERS
+  // HANDLER FOR FORM
   const handleChange = (e) => {
     setCourse({
       ...course,
@@ -60,63 +33,49 @@ export default function App() {
   };
 
   // GET COURSES
-  useEffect(() => {
-    async function getCourses() {
-      const response = await fetch("http://localhost:5067/api/Courses");
-      const data = await response.json();
-      console.log(data);
+  async function getCourses() {
+    const response = await fetch("http://localhost:5067/api/Courses");
+    const data = await response.json();
+    return data;
+  }
 
+  useEffect(() => {
+    async function loadCourses() {
+      const data = await getCourses();
       setCourses(data);
     }
 
-    getCourses();
+    loadCourses();
   }, []);
 
-  // CREATE COURSE (LOCAL ONLY)
-  const handleAddCourse = (e) => {
+  // CREATE COURSE
+  const handleAddCourse = async (e) => {
     e.preventDefault();
 
-    if (editingId) {
-      // EDIT
-      setCourses((prev) =>
-        prev.map((c) =>
-          c.id === editingId
-            ? { ...course, id: editingId, userId: user.id }
-            : c,
-        ),
-      );
-      setEditingId(null);
-    } else {
-      // ADD NEW
-      const newCourse = {
-        ...course,
-        id: Date.now(),
-        userId: user.id,
-      };
-      setCourses((prev) => [...prev, newCourse]);
-    }
-
-    setCourse({
-      title: "",
-      progress: 0,
-      difficulty: "Beginner",
-      notes: "",
+    const response = await fetch("", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(course),
     });
-  };
 
-  const handleEditCourse = (courseToEdit) => {
-    setCourse(courseToEdit);
-    setEditingId(courseToEdit.id);
-  };
+    if (response.ok) {
+      setCourse({
+        title: "",
+        progress: 0,
+        difficulty: "Beginner",
+        notes: "",
+      });
 
-  // DELETE COURSE (LOCAL ONLY)
-  const handleDeleteCourse = (id) => {
-    setCourses(courses.filter((course) => course.id !== id));
-  };
+      const data = await getCourses();
+      setCourses(data);
 
-  const handleClearCourses = () => {
-    // optional local-only clear
-    setCourses([]);
+
+      alert("Course added successfully.");
+    } else {
+      alert("Failed to add course.");
+    }
   };
 
   // FILTERING
@@ -146,8 +105,6 @@ export default function App() {
     return total;
   };
 
-  console.log("USER:", user);
-  // ROUTING
   return (
     <Routes>
       <Route path="/login" element={<Login setUser={setUser} />} />
@@ -177,18 +134,12 @@ export default function App() {
                   <h2>Add New Course</h2>
                   <CourseForm
                     course={course}
-                    editingId={editingId}
                     handleChange={handleChange}
                     handleAddCourse={handleAddCourse}
                   />
                 </section>
 
-                <CourseList
-                  courses={filteredCourses}
-                  handleEditCourse={handleEditCourse}
-                  handleDeleteCourse={handleDeleteCourse}
-                  handleClearCourses={handleClearCourses}
-                />
+                <CourseList courses={filteredCourses} />
               </div>
             </main>
 
