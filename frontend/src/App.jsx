@@ -115,6 +115,22 @@ export default function App() {
     }
   };
 
+  //Delete Course
+  const handleDeleteCourse = async (id) => {
+    const response = await fetch(`http://localhost:5067/api/Courses/${id}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      const data = await getCourses();
+      setCourses(data);
+
+      alert("Course deleted successfully.");
+    } else {
+      alert("Failed to delete course.");
+    }
+  };
+
   // FILTERING & STATS
   const filteredCourses = courses.filter((course) =>
     course.title.toLowerCase().includes(search.toLowerCase()),
@@ -172,10 +188,15 @@ export default function App() {
                     course={course}
                     handleChange={handleChange}
                     handleAddCourse={handleAddCourse}
+                    handleUpdateCourse={handleUpdateCourse}
                   />
                 </section>
 
-                <CourseList courses={filteredCourses} />
+                <CourseList
+                  courses={filteredCourses}
+                  onDelete={handleDeleteCourse}
+                  onEdit={handleEditCourse}
+                />
               </div>
             </main>
 
