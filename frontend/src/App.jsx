@@ -64,6 +64,7 @@ export default function App() {
     async function getCourses() {
       const response = await fetch("http://localhost:5067/api/Courses");
       const data = await response.json();
+      console.log(data);
 
       setCourses(data);
     }
@@ -156,46 +157,46 @@ export default function App() {
       <Route
         path="/"
         element={
-          user ? (
-            <>
-              <Header
-                search={search}
-                setSearch={setSearch}
-                user={user}
-                setUser={setUser}
+          // user ? (
+          <>
+            <Header
+              search={search}
+              setSearch={setSearch}
+              user={user}
+              setUser={setUser}
+            />
+            <main className="dashboard">
+              <StatsSection
+                courses={courses}
+                overallProgress={overallProgress}
+                completedCourses={completedCourses}
               />
-              <main className="dashboard">
-                <StatsSection
-                  courses={courses}
-                  overallProgress={overallProgress}
-                  completedCourses={completedCourses}
-                />
 
-                <div className="dashboard-content">
-                  <section className="form-section">
-                    <h2>Add New Course</h2>
-                    <CourseForm
-                      course={course}
-                      editingId={editingId}
-                      handleChange={handleChange}
-                      handleAddCourse={handleAddCourse}
-                    />
-                  </section>
-
-                  <CourseList
-                    courses={filteredCourses}
-                    handleEditCourse={handleEditCourse}
-                    handleDeleteCourse={handleDeleteCourse}
-                    handleClearCourses={handleClearCourses}
+              <div className="dashboard-content">
+                <section className="form-section">
+                  <h2>Add New Course</h2>
+                  <CourseForm
+                    course={course}
+                    editingId={editingId}
+                    handleChange={handleChange}
+                    handleAddCourse={handleAddCourse}
                   />
-                </div>
-              </main>
+                </section>
 
-              <Footer />
-            </>
-          ) : (
-            <Navigate to="/login" />
-          )
+                <CourseList
+                  courses={filteredCourses}
+                  handleEditCourse={handleEditCourse}
+                  handleDeleteCourse={handleDeleteCourse}
+                  handleClearCourses={handleClearCourses}
+                />
+              </div>
+            </main>
+
+            <Footer />
+          </>
+          // ) : (
+          //   <Navigate to="/login" />
+          // )
         }
       />
     </Routes>
