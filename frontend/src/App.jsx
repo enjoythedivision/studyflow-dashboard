@@ -52,7 +52,7 @@ export default function App() {
   const handleAddCourse = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("", {
+    const response = await fetch("http://localhost:5067/api/Courses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
