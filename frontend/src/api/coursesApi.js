@@ -4,6 +4,10 @@ export async function getCourses() {
   const response = await fetch(API_URL);
   const data = await response.json();
 
+  if (!response.ok) {
+  throw new Error("Failed to fetch courses");
+}
+
   return data;
 }
 
