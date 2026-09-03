@@ -1,4 +1,4 @@
-export default function CourseForm({ course, editingId, handleChange, handleAddCourse }) {
+export default function CourseForm({ course, editingId, handleChange, handleUpdateCourse, handleAddCourse }) {
   return (
     <form className="course-form">
       <div className="form-group">
@@ -75,7 +75,7 @@ export default function CourseForm({ course, editingId, handleChange, handleAddC
       </div>
       <button
         className="submit-btn"
-        onClick={handleAddCourse}
+        onClick={editingId ? handleUpdateCourse : handleAddCourse}
         type="submit"
       >
         {editingId ? "Save Changes" : "Add Course"}
