@@ -2,20 +2,20 @@ import CourseCard from "./CourseCard";
 
 export default function CourseList({
   courses = [],
-  handleEditCourse,
-  handleDeleteCourse,
-  handleClearCourses,
+  onEdit,
+  onDelete,
+  onClear,
 }) {
   return (
     <section className="course-list">
       <div className="course-list__header">
         <h2>My Courses</h2>
 
-        {courses.length > 0 && (
+        {courses.length > 0 && onClear && (
           <button
             type="button"
             className="clear-btn"
-            onClick={handleClearCourses}
+            onClick={onClear}
           >
             Clear all
           </button>
@@ -28,8 +28,8 @@ export default function CourseList({
             <CourseCard
               key={course.id}
               course={course}
-              onEdit={handleEditCourse}
-              onDelete={handleDeleteCourse}
+              onEdit={onEdit}
+              onDelete={onDelete}
             />
           ))
         ) : (
