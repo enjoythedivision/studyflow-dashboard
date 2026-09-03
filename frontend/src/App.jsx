@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import { getCourses } from "./api/coursesApi";
 
 export default function App() {
   const [user, setUser] = useState();
@@ -33,12 +34,6 @@ export default function App() {
   };
 
   // Get Courses
-  async function getCourses() {
-    const response = await fetch("http://localhost:5067/api/Courses");
-    const data = await response.json();
-    return data;
-  }
-
   useEffect(() => {
     async function loadCourses() {
       const data = await getCourses();
