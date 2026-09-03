@@ -6,8 +6,9 @@ public class Course
 {
     public int Id { get; set; }
 
-    public required string Title { get; set; }
-
+    [Required]
+    public string Title { get; set; } = string.Empty;
+    
     public string? Notes { get; set; }
 
     public Difficulty Difficulty { get; set; }
