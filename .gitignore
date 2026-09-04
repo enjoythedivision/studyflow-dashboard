@@ -36,3 +36,7 @@ dist/
 # Local settings
 .env
 .env.*
+
+*.db
+*.db-shm
+*.db-wal
