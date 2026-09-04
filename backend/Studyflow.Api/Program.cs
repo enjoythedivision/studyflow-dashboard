@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Studyflow.Api.Models;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -64,6 +65,21 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapIdentityApi<IdentityUser>();
+
+app.MapPost("/logout", async (
+    SignInManager<IdentityUser> signInManager,
+    [FromBody] object empty) =>
+{
+    if (empty is not null)
+    {
+        await signInManager.SignOutAsync();
+        return Results.Ok();
+    }
+
+    return Results.Unauthorized();
+})
+
+.RequireAuthorization();
 app.MapControllers();
 
 app.Run();
