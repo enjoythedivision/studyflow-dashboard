@@ -1,6 +1,6 @@
 # studyflow todo
 
-- [ ] protect `CoursesController` with `[authorize]`
+- [x] protect `CoursesController` with `[authorize]`
 - [ ] add `authApi.js` for register, login, session, and logout
 - [ ] connect signup and login to identity
 - [ ] send `credentials: "include"` with authenticated requests
