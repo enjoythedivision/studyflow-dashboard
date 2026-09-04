@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Studyflow.Api.Models;
 
@@ -11,6 +12,7 @@ public class Course
     
     public string? Notes { get; set; }
 
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public Difficulty Difficulty { get; set; }
 
     [Range(0, 100)]

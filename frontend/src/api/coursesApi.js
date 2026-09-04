@@ -20,6 +20,15 @@ export async function addCourse(course) {
     body: JSON.stringify(course),
   });
 
+  if (!response.ok) {
+    const details = await response.text();
+
+    console.error("Backend response:", details);
+    console.error("Data sent:", course);
+
+    throw new Error("Failed to add course");
+  }
+
   return response;
 }
 

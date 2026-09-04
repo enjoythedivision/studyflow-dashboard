@@ -51,22 +51,26 @@ export default function App() {
   // Create Course
   const handleAddCourse = async (e) => {
     e.preventDefault();
-    const response = await addCourse(course);
 
-    if (response.ok) {
-      setCourse({
-        title: "",
-        progress: 0,
-        difficulty: "Beginner",
-        notes: "",
-      });
+    try {
+      const response = await addCourse(course);
 
-      const data = await getCourses();
-      setCourses(data);
+      if (response.ok) {
+        setCourse({
+          title: "",
+          progress: 0,
+          difficulty: "Beginner",
+          notes: "",
+        });
 
-      alert("Course added successfully.");
-    } else {
+        const data = await getCourses();
+        setCourses(data);
+
+        alert("Course added successfully.");
+      }
+    } catch (error) {
       alert("Failed to add course.");
+      console.error(error);
     }
   };
 
