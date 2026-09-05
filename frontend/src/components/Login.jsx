@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthCard from "./AuthCard";
+import { login } from "../api/authApi"
+
 
 export default function Login({ setUser }) {
   const navigate = useNavigate();
@@ -12,22 +14,14 @@ export default function Login({ setUser }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // Mock login - replace with real auth later
-    const user = {
-      id: 1,
-      email: formData.email,
-    };
-    setUser(user);
-    localStorage.setItem("user", JSON.stringify(user));
-    navigate("/");
   }
 
-  function handleChange(e) {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  }
+  const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
 
   return (
     <AuthCard

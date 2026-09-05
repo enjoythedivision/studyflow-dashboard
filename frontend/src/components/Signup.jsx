@@ -1,35 +1,33 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthCard from "./AuthCard";
+import { register } from "../api/authApi"
 
-export default function Signup({ setUser }) {
+export default function Signup() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    username: "",
   });
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // Mock signup - replace with real auth later
-    const user = {
-      id: Date.now(),
-      email: formData.email,
-      username: formData.username,
-    };
-    setUser(user);
-    localStorage.setItem("user", JSON.stringify(user));
-    navigate("/");
+
+    try {
+      await register(formData.email, formData.password);
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
   return (
     <AuthCard
@@ -42,18 +40,6 @@ export default function Signup({ setUser }) {
       }
     >
       <form className="auth-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Your username"
-            value={formData.username}
-            onChange={handleChange}
-          />
-        </div>
-
         <div className="form-group">
           <label htmlFor="signup-email">Email</label>
           <input
