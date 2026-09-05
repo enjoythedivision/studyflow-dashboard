@@ -17,6 +17,7 @@ export default function Login({ setUser }) {
       await login(formData.email, formData.password);
       const user = await getCurrentUser();
       setUser(user);
+      alert("Hello!");
       navigate("/");
     } catch (error) {
       console.error(error);

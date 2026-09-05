@@ -16,6 +16,7 @@ export default function Signup() {
 
     try {
       await register(formData.email, formData.password);
+      alert("Signup successful! Redirecting you to login page...")
       navigate("/login");
     } catch (error) {
       console.error(error);
