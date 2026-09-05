@@ -1,27 +1,36 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthCard from "./AuthCard";
-import { login } from "../api/authApi"
-
+import { login, getCurrentUser } from "../api/authApi";
 
 export default function Login({ setUser }) {
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+
+    try {
+      await login(formData.email, formData.password);
+
+      const user = await getCurrentUser();
+      setUser(user);
+
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const handleChange = (e) => {
-  setFormData({
-    ...formData,
-    [e.target.name]: e.target.value,
-  });
-};
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
     <AuthCard
