@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import "./App.css";
 import CourseForm from "./components/CourseForm";
@@ -23,6 +23,19 @@ export default function App() {
   const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState("");
 
+  useEffect(() => {
+    async function loadCurrentUser() {
+      try {
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
+      } catch {
+        setUser(null);
+      }
+    }
+
+    loadCurrentUser();
+  }, []);
+
   // COURSE FORM STATE
   const [course, setCourse] = useState({
     title: "",
@@ -42,12 +55,18 @@ export default function App() {
   // Get Courses
   useEffect(() => {
     async function loadCourses() {
-      const data = await getCourses();
-      setCourses(data);
+      try {
+        const data = await getCourses();
+        setCourses(data);
+      } catch (error) {
+        console.error(error);
+      }
     }
 
-    loadCourses();
-  }, []);
+    if (user) {
+      loadCourses();
+    }
+  }, [user]);
 
   // Create Course
   const handleAddCourse = async (e) => {
@@ -167,43 +186,43 @@ export default function App() {
         path="/"
         element={
           user ? (
-          <>
-            <Header
-              search={search}
-              setSearch={setSearch}
-              user={user}
-              setUser={setUser}
-            />
-            <main className="dashboard">
-              <StatsSection
-                courses={courses}
-                overallProgress={overallProgress}
-                completedCourses={completedCourses}
+            <>
+              <Header
+                search={search}
+                setSearch={setSearch}
+                user={user}
+                setUser={setUser}
               />
-
-              <div className="dashboard-content">
-                <section className="form-section">
-                  <h2>Add New Course</h2>
-                  <CourseForm
-                    course={course}
-                    handleChange={handleChange}
-                    handleAddCourse={handleAddCourse}
-                    handleUpdateCourse={handleUpdateCourse}
-                    editingId={editingId}
-                  />
-                </section>
-
-                <CourseList
-                  courses={filteredCourses}
-                  onDelete={handleDeleteCourse}
-                  onEdit={handleEditCourse}
-                  onClear={handleClearCourses}
+              <main className="dashboard">
+                <StatsSection
+                  courses={courses}
+                  overallProgress={overallProgress}
+                  completedCourses={completedCourses}
                 />
-              </div>
-            </main>
 
-            <Footer />
-          </>
+                <div className="dashboard-content">
+                  <section className="form-section">
+                    <h2>Add New Course</h2>
+                    <CourseForm
+                      course={course}
+                      handleChange={handleChange}
+                      handleAddCourse={handleAddCourse}
+                      handleUpdateCourse={handleUpdateCourse}
+                      editingId={editingId}
+                    />
+                  </section>
+
+                  <CourseList
+                    courses={filteredCourses}
+                    onDelete={handleDeleteCourse}
+                    onEdit={handleEditCourse}
+                    onClear={handleClearCourses}
+                  />
+                </div>
+              </main>
+
+              <Footer />
+            </>
           ) : (
             <Navigate to="/login" />
           )
