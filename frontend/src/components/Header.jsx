@@ -1,3 +1,5 @@
+import { logout } from "../api/authApi";
+
 export default function Header({ search, setSearch, user, setUser }) {
   
   //TODO: Fix header responsiveness
