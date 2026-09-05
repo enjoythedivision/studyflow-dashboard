@@ -15,6 +15,7 @@ import {
   updateCourse,
   deleteCourse,
 } from "./api/coursesApi";
+import { getCurrentUser } from "./api/authApi";
 
 export default function App() {
   const [user, setUser] = useState();
