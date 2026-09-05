@@ -1,11 +1,19 @@
 import { logout } from "../api/authApi";
+import { useNavigate } from "react-router-dom";
 
 export default function Header({ search, setSearch, user, setUser }) {
-  
+  const navigate = useNavigate();
+
   //TODO: Fix header responsiveness
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
+  const handleLogout = async () => {
+    try {
+      await logout();
+      alert("Log out successful. Redirecting...");
+      setUser(null);
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -27,7 +35,9 @@ export default function Header({ search, setSearch, user, setUser }) {
         {user && (
           <>
             <span>Hi, {user.username || user.email}!</span>
-            <button className="submit-btn" onClick={handleLogout}>Logout</button>
+            <button className="submit-btn" onClick={handleLogout}>
+              Logout
+            </button>
           </>
         )}
       </div>
