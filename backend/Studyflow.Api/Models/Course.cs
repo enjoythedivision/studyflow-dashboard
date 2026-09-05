@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -9,7 +10,7 @@ public class Course
 
     [Required]
     public string Title { get; set; } = string.Empty;
-    
+
     public string? Notes { get; set; }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -17,4 +18,10 @@ public class Course
 
     [Range(0, 100)]
     public int Progress { get; set; }
+
+    [JsonIgnore]
+    public string? UserId { get; set; }
+
+    [JsonIgnore]
+    public IdentityUser? User { get; set; }
 }
