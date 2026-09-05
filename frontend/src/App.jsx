@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate} from "react-router-dom";
 
 import "./App.css";
 import CourseForm from "./components/CourseForm";
@@ -165,7 +165,7 @@ export default function App() {
       <Route
         path="/"
         element={
-          // user ? (
+          user ? (
           <>
             <Header
               search={search}
@@ -203,9 +203,9 @@ export default function App() {
 
             <Footer />
           </>
-          // ) : (
-          //   <Navigate to="/login" />
-          // )
+          ) : (
+            <Navigate to="/login" />
+          )
         }
       />
     </Routes>
