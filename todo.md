@@ -1,6 +1,6 @@
 # studyflow todo
 
-- [ ] assign each course to its authenticated user
+- [x] assign each course to its authenticated user
 - [ ] filter and modify courses by authenticated user id
 - [x] create and apply the ownership migration
 - [ ] test with two user accounts

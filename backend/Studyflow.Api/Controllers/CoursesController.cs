@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Studyflow.Api.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Studyflow.Api.Controllers
 {
@@ -72,13 +73,26 @@ namespace Studyflow.Api.Controllers
         // POST: api/Courses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Course>> PostCourse(Course course)
-        {
-            _context.Courses.Add(course);
-            await _context.SaveChangesAsync();
+public async Task<ActionResult<Course>> PostCourse(Course course)
+{
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return CreatedAtAction("GetCourse", new { id = course.Id }, course);
-        }
+    if (userId is null)
+    {
+        return Unauthorized();
+    }
+
+    course.UserId = userId;
+
+    _context.Courses.Add(course);
+    await _context.SaveChangesAsync();
+
+    return CreatedAtAction(
+        nameof(GetCourse),
+        new { id = course.Id },
+        course
+    );
+}
 
         // DELETE: api/Courses/5
         [HttpDelete("{id}")]
