@@ -18,7 +18,8 @@ import {
 import { getCurrentUser } from "./api/authApi";
 
 export default function App() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [courses, setCourses] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState("");
@@ -30,6 +31,8 @@ export default function App() {
         setUser(currentUser);
       } catch {
         setUser(null);
+      } finally {
+        setIsLoadingUser(false);
       }
     }
 
@@ -185,7 +188,7 @@ export default function App() {
       <Route
         path="/"
         element={
-          user ? (
+          isLoadingUser ? null : user ? (
             <>
               <Header
                 search={search}
