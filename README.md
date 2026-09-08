@@ -1,44 +1,40 @@
-StudyFlow Dashboard / Live demo: https://studyflow-dashboard-client.vercel.app/
+#### StudyFlow Dashboard
 
-This is a small React app for managing personal courses.
+This is a small full-stack app for managing personal courses.
 
-Each user can log in, see their own courses, and create, edit, or delete them. The data is stored in a mock backend (json-server), and the app uses localStorage to keep the user session.
+Each user can create an account, log in, and manage their own courses. Courses are stored in a SQLite database and are only available to the user who created them.
 
-How it works
+#### How it works
 
-When a user logs in, the app stores the user in localStorage and in React state. If no user is found, the app redirects to the login page.
+The React frontend sends requests to an ASP.NET Core Web API.
 
-Once logged in, the dashboard loads only the courses that belong to that user using their userId.
+Authentication is handled with ASP.NET Core Identity and cookies. When the app loads, it checks whether the user has an active session before showing the dashboard.
 
-Courses are fetched from the backend, and each course is linked to a user.
+Every course is linked to its owner on the backend. The API filters courses by the authenticated user and prevents users from viewing, editing, or deleting courses that belong to someone else.
 
-Main features
+#### Main features
 
-- Login and signup using a fake backend
-- Protected dashboard (only accessible when logged in)
-- Create, edit, and delete courses
+- Signup, login, and logout
+- Protected dashboard
+- User-specific course ownership
+- Create, edit, and delete courses (CRUD)
 - Search through courses
 - Basic stats based on course progress
-- Persistent login using localStorage
+- Persistent data with SQLite
 
-Data flow
+#### Data flow
 
-Login -> user stored in state and localStorage  
-Dashboard load -> fetch courses by userId  
-Add/edit/delete -> update backend and sync state
+Login -> authentication cookie created  
+App load -> check current user session  
+Dashboard load -> fetch the authenticated user's courses  
+Add/edit/delete -> API updates SQLite and React refreshes its state
 
-Tech stack
+#### Tech stack
 
 - React
 - React Router
-- useState and useEffect
-- JSON Server
-- localStorage
-
-What I learned
-
-- Handling authentication flow in React
-- Connecting React to an API
-- CRUD operations with a backend
-- Component structure and state management
-- Persisting user session in the browser
+- ASP.NET Core Web API
+- ASP.NET Core Identity
+- Entity Framework Core
+- SQLite
+- REST API
