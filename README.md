@@ -1,6 +1,6 @@
 ### StudyFlow Dashboard
 
-Live demo: [studyflow-dashboard.vercel.app](https://studyflow-dashboard.vercel.app)
+Live demo: [studyflow-dashboard-client.vercel.app](https://studyflow-dashboard-client.vercel.app)
 
 A small full-stack app for managing personal courses.
 
