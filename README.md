@@ -1,35 +1,40 @@
-#### StudyFlow Dashboard
+### StudyFlow Dashboard
 
-This is a small full-stack app for managing personal courses.
+Live demo: [studyflow-dashboard.vercel.app](https://studyflow-dashboard.vercel.app)
 
-Each user can create an account, log in, and manage their own courses. Courses are stored in a SQLite database and are only available to the user who created them.
+A small full-stack app for managing personal courses.
+
+#### Demo accounts
+
+- email: `maria.demo@studyflow.test` or `user.demo@studyflow.test`
+- password: `TestUser1!`
 
 #### How it works
 
 The React frontend sends requests to an ASP.NET Core Web API.
 
-Authentication is handled with ASP.NET Core Identity and cookies. When the app loads, it checks whether the user has an active session before showing the dashboard.
+Authentication uses ASP.NET Core Identity and cookies. When the app loads, it checks whether the user has an active session before showing the dashboard.
 
 Every course is linked to its owner on the backend. The API filters courses by the authenticated user and prevents users from viewing, editing, or deleting courses that belong to someone else.
 
-#### Main features
+#### Features
 
-- Signup, login, and logout
-- Protected dashboard
-- User-specific course ownership
-- Create, edit, and delete courses (CRUD)
-- Search through courses
-- Basic stats based on course progress
-- Persistent data with SQLite
+- signup, login, and logout
+- protected dashboard
+- user-specific course ownership
+- create, edit, and delete courses
+- search through courses
+- basic stats based on course progress
+- persistent data with SQLite
 
 #### Data flow
 
-Login -> authentication cookie created  
-App load -> check current user session  
-Dashboard load -> fetch the authenticated user's courses  
-Add/edit/delete -> API updates SQLite and React refreshes its state
+Login → authentication cookie created  
+App load → check current user session  
+Dashboard load → fetch the authenticated user's courses  
+Add/edit/delete → API updates SQLite and React refreshes its state
 
-#### Tech stack
+#### tech stack
 
 - React
 - React Router
