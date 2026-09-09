@@ -41,3 +41,8 @@ dist/
 *.db
 *.db-shm
 *.db-wal
+
+# deployment artifacts
+backend/Studyflow.Api/publish/
+backend/Studyflow.Api/studyflow-api.zip
+backend/Studyflow.Api/*.csproj.user
