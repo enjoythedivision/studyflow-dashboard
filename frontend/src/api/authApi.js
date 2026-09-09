@@ -1,9 +1,20 @@
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5067";
 
+export function getAuthHeaders() {
+  const token = localStorage.getItem("accessToken");
+
+  if (!token) {
+    return {};
+  }
+
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+}
+
 export async function register(email, password) {
   const response = await fetch(`${API_URL}/register`, {
     method: "POST",
-    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -19,9 +30,8 @@ export async function register(email, password) {
 }
 
 export async function login(email, password) {
-  const response = await fetch(`${API_URL}/login?useCookies=true`, {
+  const response = await fetch(`${API_URL}/login?useCookies=false`, {
     method: "POST",
-    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -34,11 +44,19 @@ export async function login(email, password) {
   if (!response.ok) {
     throw new Error("Invalid email or password");
   }
+
+  const data = await response.json();
+
+  if (data.accessToken) {
+    localStorage.setItem("accessToken", data.accessToken);
+  }
+
+  return data;
 }
 
 export async function getCurrentUser() {
   const response = await fetch(`${API_URL}/manage/info`, {
-    credentials: "include",
+    headers: getAuthHeaders(),
   });
 
   if (!response.ok) {
@@ -49,16 +67,5 @@ export async function getCurrentUser() {
 }
 
 export async function logout() {
-  const response = await fetch(`${API_URL}/logout`, {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({}),
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to log out.");
-  }
+  localStorage.removeItem("accessToken");
 }

@@ -1,9 +1,12 @@
+import { getAuthHeaders } from "./authApi";
+
 const API_URL = `${import.meta.env.VITE_API_URL || "http://localhost:5067"}/api/Courses`;
 
 export async function getCourses() {
   const response = await fetch(API_URL, {
-    credentials: "include",
+    headers: getAuthHeaders(),
   });
+
   const data = await response.json();
 
   if (!response.ok) {
@@ -16,9 +19,9 @@ export async function getCourses() {
 export async function addCourse(course) {
   const response = await fetch(API_URL, {
     method: "POST",
-    credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      ...getAuthHeaders(),
     },
     body: JSON.stringify(course),
   });
@@ -36,17 +39,14 @@ export async function addCourse(course) {
 }
 
 export async function updateCourse(courseToEdit) {
-  const response = await fetch(
-    `${API_URL}/${courseToEdit.id}`,
-    {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(courseToEdit),
-    }
-  );
+  const response = await fetch(`${API_URL}/${courseToEdit.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      ...getAuthHeaders(),
+    },
+    body: JSON.stringify(courseToEdit),
+  });
 
   return response;
 }
@@ -54,7 +54,7 @@ export async function updateCourse(courseToEdit) {
 export async function deleteCourse(id) {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
-    credentials: "include",
+    headers: getAuthHeaders(),
   });
 
   return response;
