@@ -34,7 +34,7 @@ App load → check current user session
 Dashboard load → fetch the authenticated user's courses  
 Add/edit/delete → API updates SQLite and React refreshes its state
 
-#### tech stack
+#### Τech stack
 
 - React
 - React Router
