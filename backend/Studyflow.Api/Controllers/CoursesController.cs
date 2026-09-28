@@ -24,7 +24,7 @@ namespace Studyflow.Api.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (userId is null)
+            if (userId == null)
             {
                 return Unauthorized();
             }
@@ -40,7 +40,7 @@ namespace Studyflow.Api.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (userId is null)
+            if (userId == null)
             {
                 return Unauthorized();
             }
@@ -51,7 +51,7 @@ namespace Studyflow.Api.Controllers
                     course.UserId == userId
                 );
 
-            if (course is null)
+            if (course == null)
             {
                 return NotFound();
             }
@@ -71,7 +71,7 @@ namespace Studyflow.Api.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (userId is null)
+            if (userId == null)
             {
                 return Unauthorized();
             }
@@ -82,7 +82,7 @@ namespace Studyflow.Api.Controllers
                     existing.UserId == userId
                 );
 
-            if (existingCourse is null)
+            if (existingCourse == null)
             {
                 return NotFound();
             }
@@ -104,7 +104,7 @@ namespace Studyflow.Api.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (userId is null)
+            if (userId == null)
             {
                 return Unauthorized();
             }
@@ -127,7 +127,7 @@ namespace Studyflow.Api.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (userId is null)
+            if (userId == null)
             {
                 return Unauthorized();
             }
@@ -138,7 +138,7 @@ namespace Studyflow.Api.Controllers
                     course.UserId == userId
                 );
 
-            if (course is null)
+            if (course == null)
             {
                 return NotFound();
             }
