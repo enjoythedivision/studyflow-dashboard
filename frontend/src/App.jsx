@@ -119,6 +119,7 @@ export default function App() {
 
       const data = await getCourses();
       setCourses(data);
+      setEditingId(null);
 
       alert("Course updated successfully.");
     } else {
