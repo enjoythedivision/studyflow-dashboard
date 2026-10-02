@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { getCurrentUser, logout } from "./api/authApi";
 import "./App.css";
 import CourseForm from "./components/CourseForm";
 import StatsSection from "./components/StatsSection";
@@ -14,7 +15,6 @@ import {
   updateCourse,
   deleteCourse,
 } from "./api/coursesApi";
-import { getCurrentUser } from "./api/authApi";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -37,6 +37,8 @@ export default function App() {
 
     loadCurrentUser();
   }, []);
+
+  const navigate = useNavigate();
 
   // COURSE FORM STATE
   const [course, setCourse] = useState({
@@ -159,6 +161,15 @@ export default function App() {
       await logout();
       alert("Log out successful. Redirecting...");
       setUser(null);
+      setCourse({
+        title: "",
+        progress: 0,
+        difficulty: "Beginner",
+        notes: "",
+      });
+      setCourses([]);
+      setSearch("");
+      setEditingId(null);
       navigate("/login");
     } catch (error) {
       console.error(error);

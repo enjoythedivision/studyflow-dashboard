@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function Header({ search, setSearch, user, handleLogout }) {
   const navigate = useNavigate();
-
   //TODO: Fix header responsiveness
 
   return (
