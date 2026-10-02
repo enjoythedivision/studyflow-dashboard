@@ -1,20 +1,9 @@
-import { logout } from "../api/authApi";
 import { useNavigate } from "react-router-dom";
 
-export default function Header({ search, setSearch, user, setUser }) {
+export default function Header({ search, setSearch, user, handleLogout }) {
   const navigate = useNavigate();
 
   //TODO: Fix header responsiveness
-  const handleLogout = async () => {
-    try {
-      await logout();
-      alert("Log out successful. Redirecting...");
-      setUser(null);
-      navigate("/login");
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <header className="header">

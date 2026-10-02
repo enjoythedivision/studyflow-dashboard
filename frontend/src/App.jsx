@@ -153,6 +153,18 @@ export default function App() {
     setCourses(data);
   };
 
+  //Handle Logout
+  const handleLogout = async () => {
+    try {
+      await logout();
+      alert("Log out successful. Redirecting...");
+      setUser(null);
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // FILTERING & STATS
   const filteredCourses = courses.filter((course) =>
     course.title.toLowerCase().includes(search.toLowerCase()),
@@ -195,6 +207,7 @@ export default function App() {
                 setSearch={setSearch}
                 user={user}
                 setUser={setUser}
+                handleLogout={handleLogout}
               />
               <main className="dashboard">
                 <StatsSection
