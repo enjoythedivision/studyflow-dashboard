@@ -18,20 +18,24 @@ namespace Studyflow.Api.Controllers
             _context = context;
         }
 
+        private string? GetUserId()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return userId;
+        }
+
         // GET: api/Courses
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (userId == null)
+            var userId = GetUserId();
+            if (userId is not null)
             {
-                return Unauthorized();
+                return await _context.Courses
+                    .Where(course => course.UserId == userId)
+                    .ToListAsync();   
             }
-
-            return await _context.Courses
-                .Where(course => course.UserId == userId)
-                .ToListAsync();
+            else return Unauthorized();
         }
 
         // GET: api/Courses/5
