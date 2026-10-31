@@ -10,7 +10,7 @@ using Studyflow.Api.Models;
 
 namespace Studyflow.Api.Migrations
 {
-    [DbContext(typeof(CourseContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20260905153839_AddCourseOwnership")]
     partial class AddCourseOwnership
     {

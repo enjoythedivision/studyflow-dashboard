@@ -21,9 +21,9 @@ public class CoursesController : ControllerBase
 ## 2. Η σύνδεση με τη βάση
 
 ```csharp
-private readonly CourseContext _context;
+private readonly AppDbContext _context;
 
-public CoursesController(CourseContext context)
+public CoursesController(AppDbContext context)
 {
     _context = context;
 }

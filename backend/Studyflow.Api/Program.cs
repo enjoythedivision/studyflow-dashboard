@@ -19,7 +19,7 @@ builder.Services
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<CourseContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(
         builder.Configuration.GetConnectionString("DefaultConnection")
     ));
@@ -28,7 +28,7 @@ builder.Services.AddAuthorization();
 
 builder.Services
     .AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<CourseContext>();
+    .AddEntityFrameworkStores<AppDbContext>();
 
 if (!builder.Environment.IsDevelopment())
 {
@@ -58,7 +58,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<CourseContext>();
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     context.Database.Migrate();
 }
 

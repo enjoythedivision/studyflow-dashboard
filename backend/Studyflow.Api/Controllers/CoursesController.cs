@@ -11,9 +11,9 @@ namespace Studyflow.Api.Controllers
     [ApiController]
     public class CoursesController : ControllerBase
     {
-        private readonly CourseContext _context;
+        private readonly AppDbContext _context;
 
-        public CoursesController(CourseContext context)
+        public CoursesController(AppDbContext context)
         {
             _context = context;
         }

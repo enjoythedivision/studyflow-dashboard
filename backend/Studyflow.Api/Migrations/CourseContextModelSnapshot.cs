@@ -9,8 +9,8 @@ using Studyflow.Api.Models;
 
 namespace Studyflow.Api.Migrations
 {
-    [DbContext(typeof(CourseContext))]
-    partial class CourseContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AppDbContext))]
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

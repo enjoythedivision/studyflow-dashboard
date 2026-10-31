@@ -9,7 +9,7 @@ using Studyflow.Api.Models;
 
 namespace Studyflow.Api.Migrations
 {
-    [DbContext(typeof(CourseContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20260904102550_InitialCreate")]
     partial class InitialCreate
     {
