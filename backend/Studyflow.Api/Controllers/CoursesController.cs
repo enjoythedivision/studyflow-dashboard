@@ -42,25 +42,23 @@ namespace Studyflow.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Course>> GetCourse(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (userId == null)
+            var userId = GetUserId();
+            if (userId is not null)
             {
-                return Unauthorized();
+                var course = await _context.Courses
+                    .FirstOrDefaultAsync(course =>
+                        course.Id == id &&
+                        course.UserId == userId
+                    );
+
+                if (course == null)
+                {
+                    return NotFound();
+                }
+
+                return course;
             }
-
-            var course = await _context.Courses
-                .FirstOrDefaultAsync(course =>
-                    course.Id == id &&
-                    course.UserId == userId
-                );
-
-            if (course == null)
-            {
-                return NotFound();
-            }
-
-            return course;
+            else return Unauthorized();
         }
 
         // PUT: api/Courses/5
@@ -73,32 +71,30 @@ namespace Studyflow.Api.Controllers
                 return BadRequest();
             }
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (userId == null)
+            var userId = GetUserId();
+            if (userId is not null)
             {
-                return Unauthorized();
+                var existingCourse = await _context.Courses
+                    .FirstOrDefaultAsync(existing =>
+                        existing.Id == id &&
+                        existing.UserId == userId
+                    );
+
+                if (existingCourse == null)
+                {
+                    return NotFound();
+                }
+
+                existingCourse.Title = course.Title;
+                existingCourse.Notes = course.Notes;
+                existingCourse.Difficulty = course.Difficulty;
+                existingCourse.Progress = course.Progress;
+
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
-
-            var existingCourse = await _context.Courses
-                .FirstOrDefaultAsync(existing =>
-                    existing.Id == id &&
-                    existing.UserId == userId
-                );
-
-            if (existingCourse == null)
-            {
-                return NotFound();
-            }
-
-            existingCourse.Title = course.Title;
-            existingCourse.Notes = course.Notes;
-            existingCourse.Difficulty = course.Difficulty;
-            existingCourse.Progress = course.Progress;
-
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            else return Unauthorized();
         }
 
         // POST: api/Courses
@@ -106,51 +102,47 @@ namespace Studyflow.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Course>> PostCourse(Course course)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (userId == null)
+            var userId = GetUserId();
+            if (userId is not null)
             {
-                return Unauthorized();
+                course.UserId = userId;
+
+                _context.Courses.Add(course);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(
+                    nameof(GetCourse),
+                    new { id = course.Id },
+                    course
+                );
             }
-
-            course.UserId = userId;
-
-            _context.Courses.Add(course);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(
-                nameof(GetCourse),
-                new { id = course.Id },
-                course
-            );
+            else return Unauthorized();
         }
 
         // DELETE: api/Courses/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (userId == null)
+            var userId = GetUserId();
+            if (userId is not null)
             {
-                return Unauthorized();
+                var course = await _context.Courses
+                    .FirstOrDefaultAsync(course =>
+                        course.Id == id &&
+                        course.UserId == userId
+                    );
+
+                if (course == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Courses.Remove(course);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
-
-            var course = await _context.Courses
-                .FirstOrDefaultAsync(course =>
-                    course.Id == id &&
-                    course.UserId == userId
-                );
-
-            if (course == null)
-            {
-                return NotFound();
-            }
-
-            _context.Courses.Remove(course);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            else return Unauthorized();
         }
     }
 }
