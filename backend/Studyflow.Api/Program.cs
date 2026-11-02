@@ -20,8 +20,8 @@ builder.Services
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(
-        builder.Configuration.GetConnectionString("DefaultConnection")
+    options.UseNpgsql(
+        AppDbContext.GetConnectionString(builder.Configuration)
     ));
 
 builder.Services.AddAuthorization();
@@ -56,8 +56,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+if (!EF.IsDesignTime)
 {
+    using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     context.Database.Migrate();
 }
@@ -94,5 +95,6 @@ app.MapPost("/logout", async (
 
 .RequireAuthorization();
 app.MapControllers();
+app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
 app.Run();

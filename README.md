@@ -25,14 +25,14 @@ Every course is linked to its owner on the backend and the API filters courses b
 - Create, edit, and delete courses
 - Search through courses
 - Basic stats based on course progress
-- Persistent data with SQLite
+- Persistent data with PostgreSQL on Neon
 
 #### Data flow
 
 Login: access token created  
 App loads: check current user session  
 Dashboard load/read courses: fetch the authenticated user's courses  
-Add/edit/delete: API updates SQLite and React refreshes its state and re-renders the UI
+Add/edit/delete: API updates PostgreSQL and React refreshes its state and re-renders the UI
 
 #### Τech stack
 
@@ -41,5 +41,44 @@ Add/edit/delete: API updates SQLite and React refreshes its state and re-renders
 - ASP.NET Core Web API
 - ASP.NET Core Identity
 - Entity Framework Core
-- SQLite
+- PostgreSQL (Neon)
 - REST API
+
+#### Database setup
+
+From the project root, store the Neon PostgreSQL URL unchanged in backend secrets:
+
+```sh
+dotnet user-secrets set "DATABASE_URL" 'YOUR_NEON_POSTGRESQL_URL' --project backend/Studyflow.Api
+```
+
+Run `npm run dev`. The API applies migrations automatically at startup.
+The new database starts empty; create an account using Sign up.
+
+#### Deployment: Render API + Vercel frontend
+
+Push the changes to GitHub. On [Render](https://dashboard.render.com), create a
+**Web Service** from this repository with these settings:
+
+| Setting | Value |
+| --- | --- |
+| Root Directory | `backend/Studyflow.Api` |
+| Language | Docker |
+| Dockerfile Path | `./Dockerfile` |
+| Instance Type | Free |
+| Health Check Path | `/health` |
+| Environment variable `PORT` | `8080` |
+| Environment variable `DATABASE_URL` | The original Neon PostgreSQL URL |
+
+The Dockerfile builds and starts the API. No custom build/start commands are needed.
+After deployment, check `https://YOUR_RENDER_HOST/health` for `{"status":"ok"}`.
+Store `DATABASE_URL` only in Render's backend environment settings.
+
+On Vercel, use Root Directory `frontend`, build command `npm run build`, and
+output directory `dist`. Set `VITE_API_URL` to the Render HTTPS URL, without a trailing
+slash or `/api/Courses`, and redeploy the frontend. The existing CORS policy allows
+`https://studyflow-dashboard-client.vercel.app`; update it if your frontend domain differs.
+
+[Render Free](https://render.com/docs/free) sleeps after inactivity; the first request
+can take about a minute. Database records remain in Neon. An API restart may require
+signing in again because the token encryption keys are stored on the API filesystem.
