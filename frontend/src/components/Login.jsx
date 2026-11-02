@@ -5,6 +5,7 @@ import { login, getCurrentUser } from "../api/authApi";
 
 export default function Login({ setUser }) {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -14,6 +15,7 @@ export default function Login({ setUser }) {
     e.preventDefault();
 
     try {
+      setLoading(true);
       await login(formData.email, formData.password);
       const user = await getCurrentUser();
       setUser(user);
@@ -22,6 +24,8 @@ export default function Login({ setUser }) {
     } catch (error) {
       console.error(error);
       alert("Login failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -69,8 +73,8 @@ export default function Login({ setUser }) {
           />
         </div>
 
-        <button className="submit-btn" type="submit">
-          Log in
+        <button className="submit-btn" type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "Log in"}
         </button>
       </form>
     </AuthCard>

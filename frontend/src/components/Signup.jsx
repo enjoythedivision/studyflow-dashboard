@@ -6,6 +6,8 @@ import { register } from "../api/authApi";
 export default function Signup() {
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -15,11 +17,14 @@ export default function Signup() {
     e.preventDefault();
 
     try {
+      setLoading(true);
       await register(formData.email, formData.password);
-      alert("Signup successful! Redirecting you to login page...")
+      alert("Account created successfully! Please log in.");
       navigate("/login");
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -67,8 +72,8 @@ export default function Signup() {
           />
         </div>
 
-        <button className="submit-btn" type="submit">
-          Sign up
+        <button className="submit-btn" type="submit" disabled={loading}>
+          {loading ? "Creating account..." : "Sign up"}
         </button>
       </form>
     </AuthCard>
