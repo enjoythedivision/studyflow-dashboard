@@ -4,10 +4,22 @@ Live demo: [studyflow-dashboard-client.vercel.app](https://studyflow-dashboard-c
 
 A small full-stack app for managing personal courses.
 
-#### Demo accounts
+#### Try the demo — for recruiters
 
-- email: `maria.demo@studyflow.test` or `user.demo@studyflow.test`
-- password: `TestUser1!`
+Open the [live dashboard](https://studyflow-dashboard-client.vercel.app) and sign in with either account:
+
+| Account | Email | Password |
+| --- | --- | --- |
+| Demo 1 | `maria.demo@studyflow.test` | `TestUser1!` |
+| Demo 2 | `user.demo@studyflow.test` | `TestUser1!` |
+
+Each account has four sample courses with different progress levels,
+difficulties, and study notes. The accounts have separate course lists,
+demonstrating user-specific ownership.
+
+Try searching for a course, editing its progress, or adding a new course to see
+the dashboard and statistics update. These are shared demo accounts, so their
+contents can change as visitors try the app.
 
 #### How it works
 
