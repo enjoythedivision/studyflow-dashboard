@@ -5,7 +5,6 @@ import "./App.css";
 import CourseForm from "./components/CourseForm";
 import StatsSection from "./components/StatsSection";
 import CourseList from "./components/CourseList";
-import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -172,6 +171,7 @@ export default function App() {
       setEditingId(null);
       navigate("/login");
     } catch (error) {
+      alert("Failed to log out.");
       console.error(error);
     }
   };
@@ -247,8 +247,6 @@ export default function App() {
                   />
                 </div>
               </main>
-
-              <Footer />
             </>
           ) : (
             <Navigate to="/login" />

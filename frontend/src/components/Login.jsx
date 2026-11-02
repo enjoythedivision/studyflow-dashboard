@@ -21,6 +21,7 @@ export default function Login({ setUser }) {
       navigate("/");
     } catch (error) {
       console.error(error);
+      alert("Login failed. Please try again.");
     }
   }
 
