@@ -4,7 +4,7 @@ Live demo: [studyflow-dashboard-client.vercel.app](https://studyflow-dashboard-c
 
 A small full-stack app for managing personal courses.
 
-#### Try the demo — for recruiters
+#### Demo
 
 Open the [live dashboard](https://studyflow-dashboard-client.vercel.app) and sign in with either account:
 
