@@ -544,6 +544,25 @@ footer:empty {
   line-height: 1.45;
 }
 
+.auth__demo {
+  margin-bottom: var(--space-xl);
+  padding: var(--space-md);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--neutral-900);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.auth__demo p {
+  margin: 0;
+}
+
+.auth__demo-title {
+  font-weight: 700;
+}
+
 .auth-form {
   display: flex;
   flex-direction: column;

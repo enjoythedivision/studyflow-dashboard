@@ -46,6 +46,11 @@ export default function Login({ setUser }) {
         </p>
       }
     >
+      <aside className="auth__demo" aria-label="Demo credentials">
+        <p className="auth__demo-title">Demo credentials</p>
+        <p>Email: <code>user.demo@studyflow.test</code></p>
+        <p>Password: <code>TestUser1!</code></p>
+      </aside>
       <form className="auth-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email</label>
