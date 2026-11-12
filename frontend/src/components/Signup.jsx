@@ -23,6 +23,7 @@ export default function Signup() {
       navigate("/login");
     } catch (error) {
       console.error(error);
+      alert("Error creating account. Please try again.");
     } finally {
       setLoading(false);
     }
