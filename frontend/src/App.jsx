@@ -51,7 +51,8 @@ export default function App() {
   const handleChange = (e) => {
     setCourse({
       ...course,
-      [e.target.name]: e.target.name === "progress" ? Number(e.target.value) : e.target.value,
+      [e.target.name]:
+        e.target.name === "progress" ? Number(e.target.value) : e.target.value,
     });
   };
 
@@ -108,37 +109,46 @@ export default function App() {
   const handleUpdateCourse = async (e) => {
     e.preventDefault();
 
-    const response = await updateCourse(course);
+    try {
+      const response = await updateCourse(course);
 
-    if (response.ok) {
-      setCourse({
-        title: "",
-        progress: 0,
-        difficulty: "Beginner",
-        notes: "",
-      });
+      if (response.ok) {
+        setCourse({
+          title: "",
+          progress: 0,
+          difficulty: "Beginner",
+          notes: "",
+        });
 
-      const data = await getCourses();
-      setCourses(data);
-      setEditingId(null);
+        const data = await getCourses();
+        setCourses(data);
+        setEditingId(null);
 
-      alert("Course updated successfully.");
-    } else {
+        alert("Course updated successfully.");
+      } else {
+        alert("Failed to update course.");
+      }
+    } catch (error) {
       alert("Failed to update course.");
+      console.error(error);
     }
   };
 
   //Delete Course
   const handleDeleteCourse = async (id) => {
-    const response = await deleteCourse(id);
+    try {
+      const response = await deleteCourse(id);
 
-    if (response.ok) {
-      const data = await getCourses();
-      setCourses(data);
-
-      alert("Course deleted successfully.");
-    } else {
+      if (response.ok) {
+        const data = await getCourses();
+        setCourses(data);
+        alert("Course deleted successfully.");
+      } else {
+        alert("Failed to delete course.");
+      }
+    } catch (error) {
       alert("Failed to delete course.");
+      console.error(error);
     }
   };
 
