@@ -51,7 +51,7 @@ export default function App() {
   const handleChange = (e) => {
     setCourse({
       ...course,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.name === "progress" ? Number(e.target.value) : e.target.value,
     });
   };
 
