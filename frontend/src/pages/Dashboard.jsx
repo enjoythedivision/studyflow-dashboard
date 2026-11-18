@@ -15,7 +15,7 @@ export default function Dashboard({ user, onLogout }) {
   const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState("");
 
-  // COURSE FORM STATE
+  // Course form state
   const [course, setCourse] = useState({
     title: "",
     progress: 0,
@@ -23,7 +23,7 @@ export default function Dashboard({ user, onLogout }) {
     notes: "",
   });
 
-  // HANDLER FOR FORM
+  // Handler for form
   const handleChange = (e) => {
     setCourse({
       ...course,
@@ -55,12 +55,7 @@ export default function Dashboard({ user, onLogout }) {
     try {
       await addCourse(course);
 
-      setCourse({
-        title: "",
-        progress: 0,
-        difficulty: "Beginner",
-        notes: "",
-      });
+      resetCourseForm();
 
       const data = await getCourses();
       setCourses(data);
@@ -73,13 +68,11 @@ export default function Dashboard({ user, onLogout }) {
   };
 
   //Update Course
-  // > CLICK "EDIT" ON A COURSE
   const handleEditCourse = (courseToEdit) => {
     setCourse(courseToEdit);
     setEditingId(courseToEdit.id);
   };
 
-  // > CLICK "UPDATE" IN THE FORM
   const handleUpdateCourse = async (e) => {
     e.preventDefault();
 
@@ -87,17 +80,9 @@ export default function Dashboard({ user, onLogout }) {
       const response = await updateCourse(course);
 
       if (response.ok) {
-        setCourse({
-          title: "",
-          progress: 0,
-          difficulty: "Beginner",
-          notes: "",
-        });
-
+        resetCourseForm();
         const data = await getCourses();
         setCourses(data);
-        setEditingId(null);
-
         alert("Course updated successfully.");
       } else {
         alert("Failed to update course.");
@@ -128,17 +113,31 @@ export default function Dashboard({ user, onLogout }) {
 
   //Clear All
   const handleClearCourses = async () => {
-    const courses = await getCourses();
+    try {
+      const coursesToDelete = await getCourses();
 
-    for (const course of courses) {
-      await deleteCourse(course.id);
+      for (const course of coursesToDelete) {
+        const response = await deleteCourse(course.id);
+
+        if (!response.ok) {
+          throw new Error("Failed to delete course");
+        }
+      }
+    } catch (error) {
+      alert("Failed to clear all courses. Some courses may remain.");
+      console.error(error);
+    } finally {
+      try {
+        const data = await getCourses();
+        setCourses(data);
+      } catch (error) {
+        alert("Failed to refresh courses. Please reload the page.");
+        console.error(error);
+      }
     }
-
-    const data = await getCourses();
-    setCourses(data);
   };
 
-  // FILTERING & STATS
+  // Filtering + Stats
   const filteredCourses = courses.filter((course) =>
     course.title.toLowerCase().includes(search.toLowerCase()),
   );
@@ -163,6 +162,18 @@ export default function Dashboard({ user, onLogout }) {
 
     return total;
   };
+
+  //Helper function for clearing form state
+  function resetCourseForm() {
+    setCourse({
+      title: "",
+      progress: 0,
+      difficulty: "Beginner",
+      notes: "",
+    });
+
+    setEditingId(null);
+  }
 
   return (
     <>
