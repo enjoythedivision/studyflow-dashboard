@@ -165,5 +165,6 @@ export default function useCourses(user) {
     handleUpdateCourse,
     handleDeleteCourse,
     handleClearCourses,
+    resetCourseForm
   };
 }

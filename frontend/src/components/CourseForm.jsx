@@ -4,12 +4,15 @@ export default function CourseForm({
   handleChange,
   handleUpdateCourse,
   handleAddCourse,
+  resetCourseForm
 }) {
   return (
     <form
       className="course-form"
       onSubmit={editingId ? handleUpdateCourse : handleAddCourse}
     >
+      <h2>{editingId ? "Edit Course" : "Add a Course"}</h2>
+
       <div className="form-group">
         <label htmlFor="title">Course Title</label>
         <input
@@ -82,12 +85,14 @@ export default function CourseForm({
           value={course.notes}
         />
       </div>
-      <button
-        className="submit-btn"
-        type="submit"
-      >
-        {editingId ? "Save Changes" : "Add Course"}
-      </button>
+      <div className="course-form__actions">
+        <button className="submit-btn" type="submit">
+          {editingId ? "Save Changes" : "Add Course"}
+        </button>
+        <button className="cancel-btn" type="button" onClick={resetCourseForm}>
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }

@@ -21,6 +21,7 @@ export default function Dashboard({ user, onLogout }) {
     handleUpdateCourse,
     handleDeleteCourse,
     handleClearCourses,
+    resetCourseForm
   } = useCourses(user);
 
   const filteredCourses = filterCourses(courses, search);
@@ -43,13 +44,13 @@ export default function Dashboard({ user, onLogout }) {
 
         <div className="dashboard-content">
           <section className="form-section">
-            <h2>Add New Course</h2>
             <CourseForm
               course={course}
               handleChange={handleChange}
               handleAddCourse={handleAddCourse}
               handleUpdateCourse={handleUpdateCourse}
               editingId={editingId}
+              resetCourseForm={resetCourseForm}
             />
           </section>
 
