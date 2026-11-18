@@ -87,7 +87,6 @@
   gap: var(--space-xs);
 }
 
-.form-group > label:first-child,
 .form-group > label {
   font-size: 0.875rem;
   font-weight: 700;
@@ -325,23 +324,7 @@ input[type="range"] {
 
 @media (min-width: 900px) {
   .dashboard {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: var(--space-sm);
-    row-gap: var(--space-sm);
     align-items: start;
-  }
-
-  .stats-section:has(> div) {
-    display: grid;
-    grid-column: 1 / -1;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: var(--space-xs);
-    row-gap: var(--space-xs);
-  }
-
-  .stats-section > div {
-    flex: none;
   }
 
   .dashboard-content {
@@ -399,14 +382,6 @@ input[type="range"] {
 
 .header span:last-child {
   color: var(--orange-500);
-}
-
-footer {
-  margin-top: auto;
-}
-
-footer:empty {
-  display: none;
 }
 
 .dashboard {

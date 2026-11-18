@@ -10,7 +10,6 @@ export default function CourseForm({
       className="course-form"
       onSubmit={editingId ? handleUpdateCourse : handleAddCourse}
     >
-      {" "}
       <div className="form-group">
         <label htmlFor="title">Course Title</label>
         <input

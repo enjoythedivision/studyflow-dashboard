@@ -77,21 +77,19 @@ export default function App() {
     e.preventDefault();
 
     try {
-      const response = await addCourse(course);
+      await addCourse(course);
 
-      if (response.ok) {
-        setCourse({
-          title: "",
-          progress: 0,
-          difficulty: "Beginner",
-          notes: "",
-        });
+      setCourse({
+        title: "",
+        progress: 0,
+        difficulty: "Beginner",
+        notes: "",
+      });
 
-        const data = await getCourses();
-        setCourses(data);
+      const data = await getCourses();
+      setCourses(data);
 
-        alert("Course added successfully.");
-      }
+      alert("Course added successfully.");
     } catch (error) {
       alert("Failed to add course.");
       console.error(error);
@@ -216,7 +214,7 @@ export default function App() {
     <Routes>
       <Route path="/login" element={<Login setUser={setUser} />} />
 
-      <Route path="/signup" element={<Signup setUser={setUser} />} />
+      <Route path="/signup" element={<Signup />} />
 
       <Route
         path="/"
@@ -227,7 +225,6 @@ export default function App() {
                 search={search}
                 setSearch={setSearch}
                 user={user}
-                setUser={setUser}
                 handleLogout={handleLogout}
               />
               <main className="dashboard">
