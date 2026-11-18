@@ -9,6 +9,8 @@ import {
 export default function useCourses(user) {
   const [courses, setCourses] = useState([]);
   const [editingId, setEditingId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
   // Course form state
   const [course, setCourse] = useState({
@@ -21,11 +23,17 @@ export default function useCourses(user) {
   // Get Courses
   useEffect(() => {
     async function loadCourses() {
+      setIsLoading(true);
+      setError("");
+
       try {
         const data = await getCourses();
         setCourses(data);
       } catch (error) {
+        setError("Could not load your courses.");
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -149,6 +157,8 @@ export default function useCourses(user) {
     courses,
     course,
     editingId,
+    isLoading,
+    error,
     handleChange,
     handleAddCourse,
     handleEditCourse,

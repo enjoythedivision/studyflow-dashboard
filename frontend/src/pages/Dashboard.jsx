@@ -13,6 +13,8 @@ export default function Dashboard({ user, onLogout }) {
     courses,
     course,
     editingId,
+    isLoading,
+    error,
     handleChange,
     handleAddCourse,
     handleEditCourse,
@@ -53,6 +55,8 @@ export default function Dashboard({ user, onLogout }) {
 
           <CourseList
             courses={filteredCourses}
+            isLoading={isLoading}
+            error={error}
             onDelete={handleDeleteCourse}
             onEdit={handleEditCourse}
             onClear={handleClearCourses}

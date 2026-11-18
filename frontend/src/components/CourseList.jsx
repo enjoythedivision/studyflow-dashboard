@@ -2,6 +2,8 @@ import CourseCard from "./CourseCard";
 
 export default function CourseList({
   courses = [],
+  isLoading = false,
+  error = "",
   onEdit,
   onDelete,
   onClear,
@@ -11,7 +13,7 @@ export default function CourseList({
       <div className="course-list__header">
         <h2>My Courses</h2>
 
-        {courses.length > 0 && onClear && (
+        {!isLoading && !error && courses.length > 0 && onClear && (
           <button type="button" className="clear-btn" onClick={onClear}>
             Clear all
           </button>
@@ -19,7 +21,15 @@ export default function CourseList({
       </div>
 
       <div className="course-list__list">
-        {courses.length > 0 ? (
+        {isLoading ? (
+          <p className="course-list__empty" role="status">
+            Loading courses…
+          </p>
+        ) : error ? (
+          <p className="course-list__empty" role="alert">
+            {error}
+          </p>
+        ) : courses.length > 0 ? (
           courses.map((course) => (
             <CourseCard
               key={course.id}
