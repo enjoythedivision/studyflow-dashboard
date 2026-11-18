@@ -5,8 +5,8 @@ export default function StatsSection({ courses, overallProgress, completedCourse
       {courses.length > 0 ? (
         <>
           <div>Total Courses: {courses.length}</div>
-          <div>Overall Progress: {overallProgress()}%</div>
-          <div>Completed Courses: {completedCourses()}</div>
+          <div>Overall Progress: {overallProgress}%</div>
+          <div>Completed Courses: {completedCourses}</div>
         </>
       ) : (
         <p>Add courses to your dashboard to start generating course stats.</p>
