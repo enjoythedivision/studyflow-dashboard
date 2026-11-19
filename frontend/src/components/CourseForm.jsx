@@ -33,6 +33,7 @@ export default function CourseForm(props) {
           placeholder="e.g. Advanced React..."
           value={course.title}
           disabled={isBusy}
+          required
         />
       </div>
       <div className="form-group">
