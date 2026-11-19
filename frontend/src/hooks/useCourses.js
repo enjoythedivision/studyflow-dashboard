@@ -117,6 +117,9 @@ export default function useCourses(user) {
       const response = await deleteCourse(id);
 
       if (response.ok) {
+        if (editingId === id) {
+          resetCourseForm();
+        }
         await refreshCourses();
         alert("Course deleted successfully.");
       } else {
@@ -138,6 +141,10 @@ export default function useCourses(user) {
 
         if (!response.ok) {
           throw new Error("Failed to delete course");
+        }
+
+        if (editingId === course.id) {
+          resetCourseForm();
         }
       }
     } catch (error) {
@@ -165,6 +172,6 @@ export default function useCourses(user) {
     handleUpdateCourse,
     handleDeleteCourse,
     handleClearCourses,
-    resetCourseForm
+    resetCourseForm,
   };
 }
