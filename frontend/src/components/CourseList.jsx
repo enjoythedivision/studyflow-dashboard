@@ -2,6 +2,7 @@ import CourseCard from "./CourseCard";
 
 export default function CourseList({
   courses = [],
+  search = "",
   isLoading = false,
   isSaving = false,
   error = "",
@@ -42,7 +43,9 @@ export default function CourseList({
           ))
         ) : (
           <p className="course-list__empty">
-            You haven’t added any courses yet!
+            {search
+              ? "No matching courses."
+              : "You haven’t added any courses yet!"}
           </p>
         )}
       </div>

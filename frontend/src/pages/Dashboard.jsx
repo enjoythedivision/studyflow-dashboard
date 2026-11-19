@@ -61,6 +61,7 @@ export default function Dashboard({ user, onLogout }) {
 
           <CourseList
             courses={filteredCourses}
+            search={search}
             isLoading={isLoading}
             isSaving={isSaving}
             error={error}
