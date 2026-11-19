@@ -2,6 +2,7 @@ export default function CourseForm(props) {
   const {
     course,
     editingId,
+    formError = "",
     handleChange,
     handleUpdateCourse,
     handleAddCourse,
@@ -19,6 +20,7 @@ export default function CourseForm(props) {
   return (
     <form
       className="course-form"
+      noValidate
       onSubmit={editingId ? handleUpdateCourse : handleAddCourse}
     >
       <h2>{editingId ? "Edit Course" : "Add a Course"}</h2>
@@ -102,6 +104,11 @@ export default function CourseForm(props) {
           disabled={isBusy}
         />
       </div>
+      {formError && (
+        <p id="course-form-error" className="course-form__error" role="alert">
+          {formError}
+        </p>
+      )}
       <div className="course-form__actions">
         <button className="submit-btn" type="submit" disabled={isBusy}>
           {submitLabel}

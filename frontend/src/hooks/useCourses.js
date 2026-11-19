@@ -12,6 +12,7 @@ export default function useCourses(user) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [formError, setFormError] = useState("");
 
   // Course form state
   const [course, setCourse] = useState({
@@ -45,6 +46,7 @@ export default function useCourses(user) {
 
   //Helper function for clearing form state
   function resetCourseForm() {
+    setFormError("");
     setCourse({
       title: "",
       progress: 0,
@@ -64,6 +66,10 @@ export default function useCourses(user) {
   const handleChange = (e) => {
     if (isSaving) return;
 
+    if (e.target.name === "title" && e.target.value.trim()) {
+      setFormError("");
+    }
+
     setCourse({
       ...course,
       [e.target.name]:
@@ -77,6 +83,12 @@ export default function useCourses(user) {
 
     if (isSaving || isLoading) return;
 
+    if (!course.title.trim()) {
+      setFormError("Please enter a course title.");
+      return;
+    }
+
+    setFormError("");
     setIsSaving(true);
     let wasAdded = false;
     let message;
@@ -104,6 +116,7 @@ export default function useCourses(user) {
   const handleEditCourse = (courseToEdit) => {
     if (isSaving) return;
 
+    setFormError("");
     setCourse(courseToEdit);
     setEditingId(courseToEdit.id);
   };
@@ -113,6 +126,12 @@ export default function useCourses(user) {
 
     if (isSaving || isLoading) return;
 
+    if (!course.title.trim()) {
+      setFormError("Please enter a course title.");
+      return;
+    }
+
+    setFormError("");
     setIsSaving(true);
     let wasUpdated = false;
     let message;
@@ -217,6 +236,7 @@ export default function useCourses(user) {
     editingId,
     isLoading,
     isSaving,
+    formError,
     error,
     handleChange,
     handleAddCourse,

@@ -15,6 +15,7 @@ export default function Dashboard({ user, onLogout }) {
     editingId,
     isLoading,
     isSaving,
+    formError,
     error,
     handleChange,
     handleAddCourse,
@@ -52,6 +53,7 @@ export default function Dashboard({ user, onLogout }) {
               handleUpdateCourse={handleUpdateCourse}
               editingId={editingId}
               isSaving={isSaving}
+              formError={formError}
               isLoading={isLoading}
               resetCourseForm={resetCourseForm}
             />

@@ -200,6 +200,11 @@ input[type="range"] {
   cursor: pointer;
 }
 
+.course-form__error {
+  color: #9b352b;
+  font-size: 0.875rem;
+}
+
 .course-form__actions {
   display: flex;
   flex-direction: column;
