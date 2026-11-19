@@ -13,7 +13,7 @@ Open the [live dashboard](https://studyflow-dashboard-client.vercel.app) and sig
 | Demo 1 | `maria.demo@studyflow.test` | `TestUser1!` |
 | Demo 2 | `user.demo@studyflow.test` | `TestUser1!` |
 
-Each account has four sample courses with different progress levels,
+The demo accounts were seeded with four sample courses each, with different progress levels,
 difficulties, and study notes. The accounts have separate course lists,
 demonstrating user-specific ownership.
 
@@ -27,7 +27,7 @@ The React frontend sends requests to an ASP.NET Core Web API.
 
 Authentication uses ASP.NET Core Identity and access tokens.
 
-Every course is linked to its owner on the backend and the API filters courses by the authenticated user and prevents users from viewing, editing, or deleting courses that belong to someone else.
+Each user can view and manage only their own courses.
 
 #### Features
 
