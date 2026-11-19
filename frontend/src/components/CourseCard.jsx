@@ -1,4 +1,4 @@
-export default function CourseCard({ course, onDelete, onEdit }) {
+export default function CourseCard({ course, onDelete, onEdit, isSaving = false }) {
   return (
     <article className="course-card">
       <div>
@@ -24,10 +24,10 @@ export default function CourseCard({ course, onDelete, onEdit }) {
       </div>
       <div className="course-card__footer">
         <div className="course-card__actions">
-          <button type="button" className="btn-continue" onClick={() => onEdit(course)}>
+          <button type="button" className="btn-continue" onClick={() => onEdit(course)} disabled={isSaving}>
             Edit
           </button>
-          <button type="button" className="btn-delete" onClick={() => onDelete(course.id)}>
+          <button type="button" className="btn-delete" onClick={() => onDelete(course.id)} disabled={isSaving}>
             Delete
           </button>
         </div>

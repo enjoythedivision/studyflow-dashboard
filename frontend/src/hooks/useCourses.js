@@ -11,6 +11,7 @@ export default function useCourses(user) {
   const [editingId, setEditingId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   // Course form state
   const [course, setCourse] = useState({
@@ -61,6 +62,8 @@ export default function useCourses(user) {
 
   // Handler for form
   const handleChange = (e) => {
+    if (isSaving) return;
+
     setCourse({
       ...course,
       [e.target.name]:
@@ -72,22 +75,35 @@ export default function useCourses(user) {
   const handleAddCourse = async (e) => {
     e.preventDefault();
 
+    if (isSaving || isLoading) return;
+
+    setIsSaving(true);
+    let wasAdded = false;
+    let message;
+
     try {
       await addCourse(course);
-
+      wasAdded = true;
       resetCourseForm();
-
       await refreshCourses();
 
-      alert("Course added successfully.");
+      message = "Course added successfully.";
     } catch (error) {
-      alert("Failed to add course.");
+      message = wasAdded
+        ? "Course added, but the list could not be refreshed. Please reload the page."
+        : "Failed to add course.";
       console.error(error);
+    } finally {
+      setIsSaving(false);
     }
+
+    alert(message);
   };
 
   //Update Course
   const handleEditCourse = (courseToEdit) => {
+    if (isSaving) return;
+
     setCourse(courseToEdit);
     setEditingId(courseToEdit.id);
   };
@@ -95,44 +111,75 @@ export default function useCourses(user) {
   const handleUpdateCourse = async (e) => {
     e.preventDefault();
 
+    if (isSaving || isLoading) return;
+
+    setIsSaving(true);
+    let wasUpdated = false;
+    let message;
+
     try {
       const response = await updateCourse(course);
 
       if (response.ok) {
+        wasUpdated = true;
         resetCourseForm();
         await refreshCourses();
-        alert("Course updated successfully.");
+        message = "Course updated successfully.";
       } else {
-        alert("Failed to update course.");
+        message = "Failed to update course.";
       }
     } catch (error) {
-      alert("Failed to update course.");
+      message = wasUpdated
+        ? "Course updated, but the list could not be refreshed. Please reload the page."
+        : "Failed to update course.";
       console.error(error);
+    } finally {
+      setIsSaving(false);
     }
+
+    alert(message);
   };
 
   //Delete Course
   const handleDeleteCourse = async (id) => {
+    if (isSaving || isLoading) return;
+
+    setIsSaving(true);
+    let wasDeleted = false;
+    let message;
+
     try {
       const response = await deleteCourse(id);
 
       if (response.ok) {
+        wasDeleted = true;
         if (editingId === id) {
           resetCourseForm();
         }
         await refreshCourses();
-        alert("Course deleted successfully.");
+        message = "Course deleted successfully.";
       } else {
-        alert("Failed to delete course.");
+        message = "Failed to delete course.";
       }
     } catch (error) {
-      alert("Failed to delete course.");
+      message = wasDeleted
+        ? "Course deleted, but the list could not be refreshed. Please reload the page."
+        : "Failed to delete course.";
       console.error(error);
+    } finally {
+      setIsSaving(false);
     }
+
+    alert(message);
   };
 
   //Clear All
   const handleClearCourses = async () => {
+    if (isSaving || isLoading) return;
+
+    setIsSaving(true);
+    let message = "All courses cleared successfully.";
+
     try {
       const coursesToDelete = await getCourses();
 
@@ -148,16 +195,20 @@ export default function useCourses(user) {
         }
       }
     } catch (error) {
-      alert("Failed to clear all courses. Some courses may remain.");
+      message = "Failed to clear all courses. Some courses may remain.";
       console.error(error);
     } finally {
       try {
         await refreshCourses();
       } catch (error) {
-        alert("Failed to refresh courses. Please reload the page.");
+        message += " The list could not be refreshed. Please reload the page.";
         console.error(error);
+      } finally {
+        setIsSaving(false);
       }
     }
+
+    alert(message);
   };
 
   return {
@@ -165,6 +216,7 @@ export default function useCourses(user) {
     course,
     editingId,
     isLoading,
+    isSaving,
     error,
     handleChange,
     handleAddCourse,

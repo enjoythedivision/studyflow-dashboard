@@ -3,6 +3,7 @@ import CourseCard from "./CourseCard";
 export default function CourseList({
   courses = [],
   isLoading = false,
+  isSaving = false,
   error = "",
   onEdit,
   onDelete,
@@ -14,7 +15,7 @@ export default function CourseList({
         <h2>My Courses</h2>
 
         {!isLoading && !error && courses.length > 0 && onClear && (
-          <button type="button" className="clear-btn" onClick={onClear}>
+          <button type="button" className="clear-btn" onClick={onClear} disabled={isSaving}>
             Clear all
           </button>
         )}
@@ -36,6 +37,7 @@ export default function CourseList({
               course={course}
               onEdit={onEdit}
               onDelete={onDelete}
+              isSaving={isSaving}
             />
           ))
         ) : (

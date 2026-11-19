@@ -14,6 +14,7 @@ export default function Dashboard({ user, onLogout }) {
     course,
     editingId,
     isLoading,
+    isSaving,
     error,
     handleChange,
     handleAddCourse,
@@ -50,6 +51,8 @@ export default function Dashboard({ user, onLogout }) {
               handleAddCourse={handleAddCourse}
               handleUpdateCourse={handleUpdateCourse}
               editingId={editingId}
+              isSaving={isSaving}
+              isLoading={isLoading}
               resetCourseForm={resetCourseForm}
             />
           </section>
@@ -57,6 +60,7 @@ export default function Dashboard({ user, onLogout }) {
           <CourseList
             courses={filteredCourses}
             isLoading={isLoading}
+            isSaving={isSaving}
             error={error}
             onDelete={handleDeleteCourse}
             onEdit={handleEditCourse}

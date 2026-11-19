@@ -1,11 +1,21 @@
-export default function CourseForm({
-  course,
-  editingId,
-  handleChange,
-  handleUpdateCourse,
-  handleAddCourse,
-  resetCourseForm
-}) {
+export default function CourseForm(props) {
+  const {
+    course,
+    editingId,
+    handleChange,
+    handleUpdateCourse,
+    handleAddCourse,
+    resetCourseForm,
+  } = props;
+  const isSaving = props.isSaving ?? false;
+  const isLoading = props.isLoading ?? false;
+  const isBusy = isSaving || isLoading;
+  let submitLabel = editingId ? "Save Changes" : "Add Course";
+
+  if (isSaving) {
+    submitLabel = "Please wait…";
+  }
+
   return (
     <form
       className="course-form"
@@ -22,6 +32,7 @@ export default function CourseForm({
           name="title"
           placeholder="e.g. Advanced React..."
           value={course.title}
+          disabled={isBusy}
         />
       </div>
       <div className="form-group">
@@ -35,6 +46,7 @@ export default function CourseForm({
           max={100}
           step={5}
           value={course.progress}
+          disabled={isBusy}
         />
       </div>
       <div className="form-group">
@@ -48,6 +60,7 @@ export default function CourseForm({
               name="difficulty"
               value="Beginner"
               checked={course.difficulty === "Beginner"}
+              disabled={isBusy}
             />
             <label htmlFor="beginner">Beginner</label>
           </div>
@@ -59,6 +72,7 @@ export default function CourseForm({
               name="difficulty"
               value="Intermediate"
               checked={course.difficulty === "Intermediate"}
+              disabled={isBusy}
             />
             <label htmlFor="intermediate">Intermediate</label>
           </div>
@@ -70,6 +84,7 @@ export default function CourseForm({
               name="difficulty"
               value="Advanced"
               checked={course.difficulty === "Advanced"}
+              disabled={isBusy}
             />
             <label htmlFor="advanced">Advanced</label>
           </div>
@@ -82,14 +97,20 @@ export default function CourseForm({
           name="notes"
           id="notes"
           placeholder="e.g. Need more practice with hooks..."
-          value={course.notes}
+          value={course.notes ?? ""}
+          disabled={isBusy}
         />
       </div>
       <div className="course-form__actions">
-        <button className="submit-btn" type="submit">
-          {editingId ? "Save Changes" : "Add Course"}
+        <button className="submit-btn" type="submit" disabled={isBusy}>
+          {submitLabel}
         </button>
-        <button className="cancel-btn" type="button" onClick={resetCourseForm}>
+        <button
+          className="cancel-btn"
+          type="button"
+          onClick={resetCourseForm}
+          disabled={isBusy}
+        >
           Cancel
         </button>
       </div>

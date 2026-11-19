@@ -82,7 +82,7 @@
   border: none;
 }
 
-.clear-btn:hover {
+.clear-btn:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.35);
   color: #9b352b;
 }
@@ -219,11 +219,17 @@ input[type="range"] {
   transition: opacity 0.15s ease;
 }
 
-.submit-btn:hover {
+.submit-btn:hover:not(:disabled) {
   opacity: 0.9;
 }
 
-.submit-btn:disabled {
+.submit-btn:disabled,
+.cancel-btn:disabled,
+.btn-continue:disabled,
+.btn-delete:disabled,
+.clear-btn:disabled,
+.course-form input:disabled,
+.course-form textarea:disabled {
   opacity: 0.6;
   cursor: wait;
 }
@@ -241,7 +247,7 @@ input[type="range"] {
   transition: background-color 0.15s ease;
 }
 
-.cancel-btn:hover {
+.cancel-btn:hover:not(:disabled) {
   background: rgba(21, 19, 19, 0.08);
 }
 
@@ -382,7 +388,7 @@ input[type="range"] {
   transition: opacity 0.15s ease;
 }
 
-.btn-continue:hover {
+.btn-continue:hover:not(:disabled) {
   opacity: 0.9;
 }
 
@@ -399,7 +405,7 @@ input[type="range"] {
   text-underline-offset: 3px;
 }
 
-.btn-delete:hover {
+.btn-delete:hover:not(:disabled) {
   color: #9b352b;
   text-decoration: underline;
 }
