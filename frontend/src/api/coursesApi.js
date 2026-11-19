@@ -10,13 +10,11 @@ export async function getCourses() {
     headers: getAuthHeaders(),
   });
 
-  const data = await response.json();
-
   if (!response.ok) {
     throw new Error("Failed to fetch courses");
   }
 
-  return data;
+  return response.json();
 }
 
 export async function addCourse(course) {
@@ -30,11 +28,6 @@ export async function addCourse(course) {
   });
 
   if (!response.ok) {
-    const details = await response.text();
-
-    console.error("Backend response:", details);
-    console.error("Data sent:", course);
-
     throw new Error("Failed to add course");
   }
 
@@ -51,6 +44,10 @@ export async function updateCourse(courseToEdit) {
     body: JSON.stringify(courseToEdit),
   });
 
+  if (!response.ok) {
+    throw new Error("Failed to update course");
+  }
+
   return response;
 }
 
@@ -59,6 +56,10 @@ export async function deleteCourse(id) {
     method: "DELETE",
     headers: getAuthHeaders(),
   });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete course");
+  }
 
   return response;
 }

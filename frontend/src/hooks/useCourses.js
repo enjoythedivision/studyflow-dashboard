@@ -62,6 +62,16 @@ export default function useCourses(user) {
     setCourses(data);
   }
 
+  function validateCourseTitle() {
+    if (!course.title.trim()) {
+      setFormError("Please enter a course title.");
+      return false;
+    }
+
+    setFormError("");
+    return true;
+  }
+
   // Handler for form
   const handleChange = (e) => {
     if (isSaving) return;
@@ -83,12 +93,8 @@ export default function useCourses(user) {
 
     if (isSaving || isLoading) return;
 
-    if (!course.title.trim()) {
-      setFormError("Please enter a course title.");
-      return;
-    }
+    if (!validateCourseTitle()) return;
 
-    setFormError("");
     setIsSaving(true);
     let wasAdded = false;
     let message;
@@ -126,27 +132,18 @@ export default function useCourses(user) {
 
     if (isSaving || isLoading) return;
 
-    if (!course.title.trim()) {
-      setFormError("Please enter a course title.");
-      return;
-    }
+    if (!validateCourseTitle()) return;
 
-    setFormError("");
     setIsSaving(true);
     let wasUpdated = false;
     let message;
 
     try {
-      const response = await updateCourse(course);
-
-      if (response.ok) {
-        wasUpdated = true;
-        resetCourseForm();
-        await refreshCourses();
-        message = "Course updated successfully.";
-      } else {
-        message = "Failed to update course.";
-      }
+      await updateCourse(course);
+      wasUpdated = true;
+      resetCourseForm();
+      await refreshCourses();
+      message = "Course updated successfully.";
     } catch (error) {
       message = wasUpdated
         ? "Course updated, but the list could not be refreshed. Please reload the page."
@@ -168,18 +165,13 @@ export default function useCourses(user) {
     let message;
 
     try {
-      const response = await deleteCourse(id);
-
-      if (response.ok) {
-        wasDeleted = true;
-        if (editingId === id) {
-          resetCourseForm();
-        }
-        await refreshCourses();
-        message = "Course deleted successfully.";
-      } else {
-        message = "Failed to delete course.";
+      await deleteCourse(id);
+      wasDeleted = true;
+      if (editingId === id) {
+        resetCourseForm();
       }
+      await refreshCourses();
+      message = "Course deleted successfully.";
     } catch (error) {
       message = wasDeleted
         ? "Course deleted, but the list could not be refreshed. Please reload the page."
@@ -203,11 +195,7 @@ export default function useCourses(user) {
       const coursesToDelete = await getCourses();
 
       for (const course of coursesToDelete) {
-        const response = await deleteCourse(course.id);
-
-        if (!response.ok) {
-          throw new Error("Failed to delete course");
-        }
+        await deleteCourse(course.id);
 
         if (editingId === course.id) {
           resetCourseForm();
