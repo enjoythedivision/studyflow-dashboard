@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthCard from "./AuthCard";
-import { login, getCurrentUser } from "../api/authApi";
 
-export default function Login({ setUser }) {
+export default function Login({ onLogin }) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -16,9 +15,7 @@ export default function Login({ setUser }) {
 
     try {
       setLoading(true);
-      await login(formData.email, formData.password);
-      const user = await getCurrentUser();
-      setUser(user);
+      await onLogin(formData.email, formData.password);
       alert("Hello!");
       navigate("/");
     } catch (error) {
