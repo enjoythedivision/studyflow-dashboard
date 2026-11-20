@@ -105,7 +105,7 @@ export default function CourseForm(props) {
         />
       </div>
       {formError && (
-        <p id="course-form-error" className="course-form__error" role="alert">
+        <p className="course-form__error" role="alert">
           {formError}
         </p>
       )}

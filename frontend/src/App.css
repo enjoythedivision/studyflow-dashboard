@@ -6,11 +6,6 @@
   min-width: 0;
 }
 
-.form-section,
-.course-list {
-  margin-bottom: 0;
-}
-
 .form-section h2,
 .course-list h2 {
   font-size: clamp(1.5rem, 3vw, 1.875rem);
@@ -18,16 +13,12 @@
   letter-spacing: -0.03em;
   color: var(--neutral-900);
   margin-bottom: var(--space-lg);
-  padding-bottom: 0;
-  border-bottom: none;
 }
 
 .form-section {
   padding: var(--space-xl);
   background: #d3ed74;
   border-radius: var(--radius-lg);
-  border: none;
-  box-shadow: none;
 }
 
 .course-list {
@@ -45,7 +36,6 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
-  margin-bottom: 0;
   padding-bottom: var(--space-sm);
 }
 
@@ -272,9 +262,6 @@ input[type="range"] {
   gap: var(--space-md);
   padding: 1.25rem 0;
   background: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
   color: var(--neutral-900);
 }
 
@@ -317,14 +304,12 @@ input[type="range"] {
   line-height: 1.35;
   letter-spacing: -0.02em;
   color: var(--neutral-900);
-  margin-top: 0;
   overflow-wrap: anywhere;
 }
 
 .course-card__notes {
   grid-area: notes;
   max-width: 54ch;
-  margin-top: 0;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.55;
@@ -422,7 +407,6 @@ input[type="range"] {
 
   .dashboard-content {
     display: grid;
-    grid-column: 1 / -1;
     grid-template-columns: repeat(3, 1fr);
     column-gap: var(--space-md);
     align-items: start;
@@ -485,7 +469,6 @@ input[type="range"] {
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--neutral-900);
-  box-sizing: border-box;
 }
 
 .header .logo span:last-child {
@@ -523,8 +506,6 @@ input[type="range"] {
 .stats-section {
   padding: 0;
   background: transparent;
-  border: none;
-  box-shadow: none;
 }
 
 .stats-section h2 {

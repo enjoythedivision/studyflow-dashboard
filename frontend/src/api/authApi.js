@@ -52,8 +52,6 @@ export async function login(email, password) {
   if (data.accessToken) {
     localStorage.setItem("accessToken", data.accessToken);
   }
-
-  return data;
 }
 
 export async function getCurrentUser() {

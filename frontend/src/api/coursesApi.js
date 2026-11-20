@@ -30,8 +30,6 @@ export async function addCourse(course) {
   if (!response.ok) {
     throw new Error("Failed to add course");
   }
-
-  return response;
 }
 
 export async function updateCourse(courseToEdit) {
@@ -47,8 +45,6 @@ export async function updateCourse(courseToEdit) {
   if (!response.ok) {
     throw new Error("Failed to update course");
   }
-
-  return response;
 }
 
 export async function deleteCourse(id) {
@@ -60,6 +56,4 @@ export async function deleteCourse(id) {
   if (!response.ok) {
     throw new Error("Failed to delete course");
   }
-
-  return response;
 }
