@@ -1,11 +1,11 @@
 import CourseCard from "./CourseCard";
 
 export default function CourseList({
-  courses = [],
-  search = "",
-  isLoading = false,
-  isSaving = false,
-  error = "",
+  courses,
+  search,
+  isLoading,
+  isSaving,
+  error,
   onEdit,
   onDelete,
   onClear,
@@ -15,7 +15,7 @@ export default function CourseList({
       <div className="course-list__header">
         <h2>My Courses</h2>
 
-        {!isLoading && !error && courses.length > 0 && onClear && (
+        {!isLoading && !error && courses.length > 0 && (
           <button type="button" className="clear-btn" onClick={onClear} disabled={isSaving}>
             Clear all
           </button>

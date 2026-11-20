@@ -1,4 +1,4 @@
-export default function CourseCard({ course, onDelete, onEdit, isSaving = false }) {
+export default function CourseCard({ course, onDelete, onEdit, isSaving }) {
   return (
     <article className="course-card">
       <div>

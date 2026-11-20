@@ -1,15 +1,14 @@
-export default function CourseForm(props) {
-  const {
-    course,
-    editingId,
-    formError = "",
-    handleChange,
-    handleUpdateCourse,
-    handleAddCourse,
-    resetCourseForm,
-  } = props;
-  const isSaving = props.isSaving ?? false;
-  const isLoading = props.isLoading ?? false;
+export default function CourseForm({
+  course,
+  editingId,
+  formError,
+  isSaving,
+  isLoading,
+  handleChange,
+  handleUpdateCourse,
+  handleAddCourse,
+  resetCourseForm,
+}) {
   const isBusy = isSaving || isLoading;
   let submitLabel = editingId ? "Save Changes" : "Add Course";
 
